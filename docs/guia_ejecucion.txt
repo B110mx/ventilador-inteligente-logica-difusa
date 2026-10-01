@@ -1,0 +1,23 @@
+GUÍA DE EJECUCIÓN DEL PROTOTIPO
+
+Archivo principal:
+sistema_difuso_ventilador.py
+
+Requisitos:
+- Tener Python instalado.
+- No se requieren librerías externas.
+
+Cómo ejecutar:
+1. Abrir terminal o CMD en la carpeta del proyecto.
+2. Ejecutar:
+   python sistema_difuso_ventilador.py
+
+Opciones del programa:
+1. Ingresar temperatura manualmente.
+2. Ejecutar pruebas de demostración.
+
+Temperaturas recomendadas para la demo:
+10, 18, 22, 25, 28, 30 y 35 °C.
+
+Idea para explicar:
+El sistema convierte la temperatura en grados de pertenencia: fría, templada y caliente. Después aplica reglas difusas y calcula una velocidad final del ventilador mediante promedio ponderado.
