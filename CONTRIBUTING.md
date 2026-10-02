@@ -1,23 +1,30 @@
 # Flujo de trabajo del equipo
 
-Cada integrante debe realizar sus cambios en una rama propia y registrar al menos uno o dos commits descriptivos.
+Cada integrante debe realizar sus cambios en una rama propia y registrar commits descriptivos.
 
 ## Ramas sugeridas
 
-- `documentacion-mariana`
-- `pruebas-francesco`
-- `logica-difusa-josue`
-- `interfaz-luis`
+- `logica-difusa-abril`
+- `interfaz-mariana`
+- `validacion-luis`
+- `visualizacion-francesco`
+- `integracion-josue`
 
-La rama `main` contiene la versión integrada y lista para evaluar. Luis Bryan Rojas Rodríguez revisará e integrará las aportaciones. Abril Miranda Baltazar Varillas verificará los entregables antes de subirlos a Classroom.
+La rama `main` recibirá las aportaciones después de su revisión. Cada integrante debe crear y subir personalmente los archivos correspondientes a su asignación.
 
-## Mensajes de commit
+## Procedimiento
 
-Usar mensajes breves que describan el cambio, por ejemplo:
+1. Cambiar a la rama personal.
+2. Crear únicamente los archivos asignados.
+3. Probar el trabajo realizado.
+4. Registrar uno o varios commits con mensajes claros.
+5. Subir la rama y solicitar su integración.
+
+## Ejemplos de commits
 
 ```text
-docs: completar problemática y requisitos
-test: agregar casos de temperatura límite
-feat: ajustar reglas de lógica difusa
+docs: redactar problemática del proyecto
+test: agregar datos de prueba y validaciones
+feat: implementar reglas de lógica difusa
 feat: crear interfaz para ingresar temperatura
 ```

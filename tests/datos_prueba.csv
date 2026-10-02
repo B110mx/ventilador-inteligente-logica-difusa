@@ -1,9 +1,0 @@
-temperatura_c,velocidad_esperada_pct,categoria_principal
-10,20.0,fria
-18,30.5,fria
-22,44.5,templada
-25,55.0,templada
-28,68.5,templada
-30,77.5,caliente
-35,100.0,caliente
-40,100.0,caliente
