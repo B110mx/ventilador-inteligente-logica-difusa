@@ -1,1 +1,1 @@
-# La versión actual usa únicamente la biblioteca estándar de Python.
+matplotlib
