@@ -1,22 +1,24 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, Toplevel
 
-# Importamos la funci√≥n de l√≥gica difusa sin modificar tu archivo existente
+# Importamos la lÛgica de cada compaÒero
 from fuzzy_logic import calcular_velocidad
+from data_validation import parse_temperature, TemperatureValidationError
+import visualization
 
 class VentiladorApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("Ventilador Inteligente - L√≥gica Difusa")
-        self.root.geometry("420x540")
+        self.root.title("Ventilador Inteligente - LÛgica Difusa")
+        self.root.geometry("420x600")
         self.root.config(bg="#e8edf2")
         self.root.resizable(False, False)
 
         # Contenedor principal estilo tarjeta (Card)
         self.card = tk.Frame(root, bg="#ffffff", bd=0, highlightthickness=0)
-        self.card.place(x=20, y=20, width=380, height=500)
+        self.card.place(x=20, y=20, width=380, height=560)
 
-        # T√≠tulo principal moderno
+        # TÌtulo principal moderno
         self.titulo_label = tk.Label(
             self.card, 
             text="Control Inteligente de Ventilador", 
@@ -32,7 +34,7 @@ class VentiladorApp:
 
         self.label_temp = tk.Label(
             self.frame_input, 
-            text="Ingrese la temperatura (¬∞C):", 
+            text="Ingrese la temperatura (∞C):", 
             font=("Segoe UI", 11),
             bg="#ffffff",
             fg="#475569"
@@ -51,7 +53,7 @@ class VentiladorApp:
         )
         self.entry_temp.pack(side=tk.LEFT, padx=5, ipady=3)
 
-        # Bot√≥n moderno con estilo plano
+        # BotÛn moderno con estilo plano
         self.btn_calcular = tk.Button(
             self.card, 
             text="Calcular Velocidad", 
@@ -89,27 +91,44 @@ class VentiladorApp:
         self.canvas_gauge.pack(pady=10)
         self.dibujar_gauge(0.0)
 
+        # BotÛn para ver gr·ficas
+        self.btn_graficas = tk.Button(
+            self.card, 
+            text="Ver Gr·ficas de LÛgica Difusa", 
+            font=("Segoe UI", 10),
+            bg="#10b981", 
+            fg="white",
+            activebackground="#059669",
+            activeforeground="white",
+            relief="flat",
+            cursor="hand2",
+            padx=10,
+            pady=5,
+            command=self.mostrar_graficas
+        )
+        self.btn_graficas.pack(pady=20)
+        self.btn_graficas["state"] = "disabled" # Se habilita tras un c·lculo v·lido
+        
+        self.ultima_temperatura = None
+
     def dibujar_gauge(self, porcentaje):
-        """Dibuja un medidor semicircular moderno que cambia de color seg√∫n el valor."""
+        """Dibuja un medidor semicircular moderno que cambia de color seg˙n el valor."""
         self.canvas_gauge.delete("all")
         
-        # Arco de fondo (gris claro)
         self.canvas_gauge.create_arc(
             20, 10, 240, 230, 
             start=0, extent=180, 
             style="arc", width=12, outline="#e2e8f0"
         )
         
-        # C√°lculo del √°ngulo del arco de valor
         extent = (porcentaje / 100.0) * 180
         if extent > 0:
-            # Color din√°mico (Azul para fr√≠o/medio, Rojo para alta velocidad)
             if porcentaje < 40:
-                color = "#0ea5e9"  # Azul
+                color = "#0ea5e9"
             elif porcentaje < 75:
-                color = "#10b981"  # Verde
+                color = "#10b981"
             else:
-                color = "#ef4444"  # Rojo
+                color = "#ef4444"
             
             self.canvas_gauge.create_arc(
                 20, 10, 240, 230, 
@@ -117,7 +136,6 @@ class VentiladorApp:
                 style="arc", width=12, outline=color
             )
         
-        # Texto del porcentaje en el centro del medidor
         self.canvas_gauge.create_text(
             130, 85, 
             text=f"{porcentaje:.2f}%", 
@@ -126,31 +144,60 @@ class VentiladorApp:
         )
 
     def procesar_temperatura(self):
-        """Obtiene la temperatura de la interfaz, llama a la l√≥gica difusa y muestra el resultado."""
         temperatura_str = self.entry_temp.get().strip()
         
-        if not temperatura_str:
-            messagebox.showerror("Error", "Por favor ingrese un valor de temperatura.")
-            return
-
         try:
-            # Convertimos el texto ingresado a un valor flotante
-            temperatura = float(temperatura_str)
+            # ValidaciÛn utilizando la lÛgica de Luis Bryan
+            temperatura = parse_temperature(temperatura_str)
             
-            # Llamamos a la funci√≥n calcular_velocidad de tu m√≥dulo fuzzy_logic
+            # LÛgica difusa de Abril Miranda
             resultado_tuple = calcular_velocidad(temperatura)
             resultado_velocidad = resultado_tuple[0]
             
-            # Actualizamos texto y medidor gr√°fico
+            # Interfaz de Mariana CÛrdova
             self.label_resultado.config(
                 text=f"Velocidad recomendada: {resultado_velocidad:.2f}%"
             )
             self.dibujar_gauge(resultado_velocidad)
             
-        except ValueError:
-            messagebox.showerror("Error de formato", "Ingrese un n√∫mero v√°lido para la temperatura.")
+            self.ultima_temperatura = temperatura
+            self.btn_graficas["state"] = "normal"
+            
+        except TemperatureValidationError as e:
+            messagebox.showerror("Error de ValidaciÛn", str(e))
         except Exception as e:
-            messagebox.showerror("Error", f"Ocurri√≥ un error al calcular: {str(e)}")
+            messagebox.showerror("Error", f"OcurriÛ un error al calcular: {str(e)}")
+
+    def mostrar_graficas(self):
+        """Muestra las gr·ficas generadas por la lÛgica de Francesco Romero."""
+        if self.ultima_temperatura is None:
+            return
+            
+        ventana_graficas = Toplevel(self.root)
+        ventana_graficas.title("Gr·ficas del Sistema Difuso")
+        ventana_graficas.geometry("800x900")
+        
+        import matplotlib.pyplot as plt
+        
+        fig1 = plt.figure(figsize=(6, 3))
+        fig2 = plt.figure(figsize=(6, 3))
+        fig3 = plt.figure(figsize=(6, 3))
+        
+        visualization.grafica_pertenencia(self.ultima_temperatura, fig=fig1)
+        visualization.grafica_activacion(self.ultima_temperatura, fig=fig2)
+        visualization.grafica_respuesta(self.ultima_temperatura, fig=fig3)
+        
+        frame1 = tk.Frame(ventana_graficas)
+        frame1.pack(fill="both", expand=True)
+        visualization.embed_figure(fig1, frame1)
+        
+        frame2 = tk.Frame(ventana_graficas)
+        frame2.pack(fill="both", expand=True)
+        visualization.embed_figure(fig2, frame2)
+        
+        frame3 = tk.Frame(ventana_graficas)
+        frame3.pack(fill="both", expand=True)
+        visualization.embed_figure(fig3, frame3)
 
 if __name__ == "__main__":
     root = tk.Tk()

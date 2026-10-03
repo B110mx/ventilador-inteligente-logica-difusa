@@ -1,0 +1,17 @@
+# Datos de prueba sugeridos para el Ventilador Inteligente (Lógica Difusa)
+# Puede ingresar estos valores en la interfaz para probar los distintos casos de uso.
+
+-5    : Debe dar "Velocidad recomendada: 33.00%" (Fría)
+15    : Debe dar "Velocidad recomendada: 33.00%" (Fría)
+20    : Debe dar "Velocidad recomendada: 33.00%" (Fría)
+22.5  : Debe dar "Velocidad recomendada: 49.50%" (Transición Frío a Templado)
+25    : Debe dar "Velocidad recomendada: 66.00%" (Templado / Transición inicial)
+26.5  : Transición Templado a Caliente, mezcla de reglas.
+30    : Debe dar "Velocidad recomendada: 100.00%" (Caliente)
+40    : Debe dar "Velocidad recomendada: 100.00%" (Caliente)
+
+# Casos de error / validación
+"texto" : Mensaje de error, no es un número.
+-20     : Error de validación (fuera del rango de -10 a 60).
+70      : Error de validación (fuera del rango).
+""      : Mensaje de error pidiendo temperatura.
