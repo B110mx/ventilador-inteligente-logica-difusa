@@ -1,7 +1,8 @@
+ï»¿# -*- coding: utf-8 -*-
 import sys
 import os
 
-# Agregamos la carpeta src al PATH de Python para que pueda importar los módulos
+# Agregamos la carpeta src al PATH de Python para que pueda importar los modulos
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
 
 import tkinter as tk
@@ -15,3 +16,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

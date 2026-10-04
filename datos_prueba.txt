@@ -1,17 +1,17 @@
-# Datos de prueba sugeridos para el Ventilador Inteligente (L骻ica Difusa)
+# Datos de prueba sugeridos para el Ventilador Inteligente (L贸gica Difusa)
 # Puede ingresar estos valores en la interfaz para probar los distintos casos de uso.
 
--5    : Debe dar "Velocidad recomendada: 33.00%" (Fr韆)
-15    : Debe dar "Velocidad recomendada: 33.00%" (Fr韆)
-20    : Debe dar "Velocidad recomendada: 33.00%" (Fr韆)
-22.5  : Debe dar "Velocidad recomendada: 49.50%" (Transici髇 Fr韔 a Templado)
-25    : Debe dar "Velocidad recomendada: 66.00%" (Templado / Transici髇 inicial)
-26.5  : Transici髇 Templado a Caliente, mezcla de reglas.
+-5    : Debe dar "Velocidad recomendada: 33.00%" (Fr铆a)
+15    : Debe dar "Velocidad recomendada: 33.00%" (Fr铆a)
+20    : Debe dar "Velocidad recomendada: 33.00%" (Fr铆a)
+22.5  : Debe dar "Velocidad recomendada: 49.50%" (Transici贸n Fr铆o a Templado)
+25    : Debe dar "Velocidad recomendada: 66.00%" (Templado / Transici贸n inicial)
+26.5  : Transici贸n Templado a Caliente, mezcla de reglas.
 30    : Debe dar "Velocidad recomendada: 100.00%" (Caliente)
 40    : Debe dar "Velocidad recomendada: 100.00%" (Caliente)
 
-# Casos de error / validaci髇
-"texto" : Mensaje de error, no es un n鷐ero.
--20     : Error de validaci髇 (fuera del rango de -10 a 60).
-70      : Error de validaci髇 (fuera del rango).
+# Casos de error / validaci贸n
+"texto" : Mensaje de error, no es un n煤mero.
+-20     : Error de validaci贸n (fuera del rango de -10 a 60).
+70      : Error de validaci贸n (fuera del rango).
 ""      : Mensaje de error pidiendo temperatura.

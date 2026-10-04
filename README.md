@@ -1,25 +1,25 @@
-# Ventilador Inteligente con LÛgica Difusa
+# Ventilador Inteligente con L√≥gica Difusa
 
-## 1. Problem·tica a resolver
-En muchos espacios cerrados (como salones de clases, oficinas o habitaciones), los ventiladores convencionales requieren un ajuste manual constante. Esto genera incomodidad tÈrmica: cuando la temperatura baja, el ventilador puede seguir en alta velocidad, causando frÌo excesivo, y cuando hace calor, puede tardar en ajustarse, causando incomodidad. Esto no solo afecta el confort de los usuarios, sino que tambiÈn ocasiona un consumo de energÌa ineficiente.
+## 1. Problem√°tica a resolver
+En muchos espacios cerrados (como salones de clases, oficinas o habitaciones), los ventiladores convencionales requieren un ajuste manual constante. Esto genera incomodidad t√©rmica: cuando la temperatura baja, el ventilador puede seguir en alta velocidad, causando fr√≠o excesivo, y cuando hace calor, puede tardar en ajustarse, causando incomodidad. Esto no solo afecta el confort de los usuarios, sino que tambi√©n ocasiona un consumo de energ√≠a ineficiente.
 
-## 2. DescripciÛn del proyecto
-El "Ventilador Inteligente" es un prototipo de software desarrollado en Python que automatiza la regulaciÛn de la velocidad de un ventilador en funciÛn de la temperatura ambiente utilizando **lÛgica difusa**. Cuenta con una interfaz gr·fica amigable donde el usuario ingresa la temperatura, y el sistema calcula en tiempo real (mostrando gr·ficas del proceso) el porcentaje exacto de velocidad que deberÌa tener el ventilador.
+## 2. Descripci√≥n del proyecto
+El "Ventilador Inteligente" es un prototipo de software desarrollado en Python que automatiza la regulaci√≥n de la velocidad de un ventilador en funci√≥n de la temperatura ambiente utilizando **l√≥gica difusa**. Cuenta con una interfaz gr√°fica amigable donde el usuario ingresa la temperatura, y el sistema calcula en tiempo real (mostrando gr√°ficas del proceso) el porcentaje exacto de velocidad que deber√≠a tener el ventilador.
 
 ## 3. Rama de IA
-Este proyecto se enmarca dentro de la **Inteligencia Artificial SimbÛlica / Cl·sica**, especÌficamente en el campo de los **Sistemas Expertos** mediante el uso de **LÛgica Difusa (Fuzzy Logic)**. A diferencia de la lÛgica booleana estricta (verdadero/falso), la lÛgica difusa permite manejar grados de verdad (por ejemplo, "quÈ tan frÌo o caliente" est· el salÛn), imitando el razonamiento humano para tomar decisiones m·s precisas.
+Este proyecto se enmarca dentro de la **Inteligencia Artificial Simb√≥lica / Cl√°sica**, espec√≠ficamente en el campo de los **Sistemas Expertos** mediante el uso de **L√≥gica Difusa (Fuzzy Logic)**. A diferencia de la l√≥gica booleana estricta (verdadero/falso), la l√≥gica difusa permite manejar grados de verdad (por ejemplo, "qu√© tan fr√≠o o caliente" est√° el sal√≥n), imitando el razonamiento humano para tomar decisiones m√°s precisas.
 
 ## 4. Caso de uso
-**Actor principal:** Usuario (ej. Profesor o alumno en un salÛn de clases).
-**DescripciÛn:** El usuario interact˙a con la interfaz gr·fica ingresando la lectura actual del termÛmetro del salÛn (ej. 24.5 ∞C). El sistema recibe este dato, lo pasa por un proceso de *fuzzificaciÛn* (evaluando quÈ tan "FrÌa", "Templada" o "Caliente" es la temperatura), aplica las reglas de inferencia y finalmente *defuzzifica* el resultado para devolver una velocidad especÌfica (ej. 60.5% de velocidad). El usuario tambiÈn puede ver las gr·ficas de pertenencia y activaciÛn de reglas para comprender la decisiÛn del sistema.
+**Actor principal:** Usuario (ej. Profesor o alumno en un sal√≥n de clases).
+**Descripci√≥n:** El usuario interact√∫a con la interfaz gr√°fica ingresando la lectura actual del term√≥metro del sal√≥n (ej. 24.5 ¬∞C). El sistema recibe este dato, lo pasa por un proceso de *fuzzificaci√≥n* (evaluando qu√© tan "Fr√≠a", "Templada" o "Caliente" es la temperatura), aplica las reglas de inferencia y finalmente *defuzzifica* el resultado para devolver una velocidad espec√≠fica (ej. 60.5% de velocidad). El usuario tambi√©n puede ver las gr√°ficas de pertenencia y activaci√≥n de reglas para comprender la decisi√≥n del sistema.
 
 ## 5. Requisitos
 - **Sistema Operativo:** Windows, macOS o Linux.
 - **Lenguaje:** Python 3.8 o superior.
-- **Dependencias:** `tkinter` (incluido en Python est·ndar) y `matplotlib`.
-- Las dependencias externas est·n detalladas en `requirements.txt`.
+- **Dependencias:** `tkinter` (incluido en Python est√°ndar) y `matplotlib`.
+- Las dependencias externas est√°n detalladas en `requirements.txt`.
 
-## 6. Instrucciones de instalaciÛn y ejecuciÛn (Local)
+## 6. Instrucciones de instalaci√≥n y ejecuci√≥n (Local)
 1. **Clonar el repositorio:**
    ```bash
    git clone https://github.com/B110mx/ventilador-inteligente-logica-difusa.git
@@ -42,19 +42,19 @@ Este proyecto se enmarca dentro de la **Inteligencia Artificial SimbÛlica / Cl·s
    python main.py
    ```
 
-## 7. CrÈditos y licencias
-- **Desarrollo:** Realizado por el equipo integrado por Abril Miranda, Mariana CÛrdova, Luis Bryan, Francesco Romero y JosuÈ David.
-- **LibrerÌas:** 
+## 7. Cr√©ditos y licencias
+- **Desarrollo:** Realizado por el equipo integrado por Abril Miranda, Mariana C√≥rdova, Luis Bryan, Francesco Romero y Josu√© David.
+- **Librer√≠as:** 
   - [Tkinter](https://docs.python.org/3/library/tkinter.html) (Licencia Python)
   - [Matplotlib](https://matplotlib.org/) (Licencia PSF)
 - **Uso de Inteligencia Artificial:** 
-  - La estructura y refactorizaciÛn de cÛdigo base, adem·s de la integraciÛn del archivo `main.py`, la optimizaciÛn del archivo `interface.py` y la estructuraciÛn final del `README.md` contaron con la asistencia de Modelos de Lenguaje Grandes (LLMs).
-  - Los scripts de evaluaciÛn y componentes iniciales de lÛgica matem·tica fueron creados y modificados manualmente por el equipo.
+  - La estructura y refactorizaci√≥n de c√≥digo base, adem√°s de la integraci√≥n del archivo `main.py`, la optimizaci√≥n del archivo `interface.py` y la estructuraci√≥n final del `README.md` contaron con la asistencia de Modelos de Lenguaje Grandes (LLMs).
+  - Los scripts de evaluaci√≥n y componentes iniciales de l√≥gica matem√°tica fueron creados y modificados manualmente por el equipo.
 
-## 8. Bit·cora de prompts
-A continuaciÛn, algunos de los prompts clave utilizados para ayudar en la generaciÛn del cÛdigo y estructuraciÛn:
-1. *"Crea una estructura base en Python para evaluar funciones de pertenencia de temperatura (frÌo, templado, caliente)."*
-2. *"Necesito un script de validaciÛn robusto en Python que compruebe que la entrada de temperatura estÈ entre -10 y 60 grados Celsius."*
-3. *"Genera una interfaz en Tkinter con un diseÒo moderno, tipo tarjeta (card), y un canvas con un medidor semicircular (gauge) din·mico."*
-4. *"Crea gr·ficos de Matplotlib para visualizar la pertenencia, activaciÛn de reglas y la curva de respuesta para un sistema de lÛgica difusa."*
-5. *"Escribe un README.md estructurado para la entrega del proyecto de IA, incluyendo la problem·tica, descripciÛn, instrucciones y uso de IA."*
+## 8. Bit√°cora de prompts
+A continuaci√≥n, algunos de los prompts clave utilizados para ayudar en la generaci√≥n del c√≥digo y estructuraci√≥n:
+1. *"Crea una estructura base en Python para evaluar funciones de pertenencia de temperatura (fr√≠o, templado, caliente)."*
+2. *"Necesito un script de validaci√≥n robusto en Python que compruebe que la entrada de temperatura est√© entre -10 y 60 grados Celsius."*
+3. *"Genera una interfaz en Tkinter con un dise√±o moderno, tipo tarjeta (card), y un canvas con un medidor semicircular (gauge) din√°mico."*
+4. *"Crea gr√°ficos de Matplotlib para visualizar la pertenencia, activaci√≥n de reglas y la curva de respuesta para un sistema de l√≥gica difusa."*
+5. *"Escribe un README.md estructurado para la entrega del proyecto de IA, incluyendo la problem√°tica, descripci√≥n, instrucciones y uso de IA."*
