@@ -24,7 +24,7 @@ class ParseTemperatureTests(unittest.TestCase):
     """Comprueba entradas válidas, límites y datos incorrectos."""
 
     def test_accepts_integer_and_decimal_numbers(self):
-        cases = [(25, 25.0), (22.5, 22.5), (-3, -3.0)]
+        cases = [(25, 25.0), (22.5, 22.5), (10, 10.0)]
         for value, expected in cases:
             with self.subTest(value=value):
                 self.assertEqual(parse_temperature(value), expected)
@@ -36,8 +36,8 @@ class ParseTemperatureTests(unittest.TestCase):
                 self.assertEqual(parse_temperature(value), expected)
 
     def test_accepts_both_range_limits(self):
-        self.assertEqual(parse_temperature(MIN_TEMPERATURE_C), -10.0)
-        self.assertEqual(parse_temperature(MAX_TEMPERATURE_C), 60.0)
+        self.assertEqual(parse_temperature(MIN_TEMPERATURE_C), 10.0)
+        self.assertEqual(parse_temperature(MAX_TEMPERATURE_C), 40.0)
 
     def test_rejects_empty_and_non_numeric_text(self):
         for value in ("", "   ", "caliente", "20 grados"):
@@ -46,7 +46,7 @@ class ParseTemperatureTests(unittest.TestCase):
                     parse_temperature(value)
 
     def test_rejects_values_outside_the_allowed_range(self):
-        for value in (-10.1, 60.1, "-20", "100"):
+        for value in (9.9, 40.1, "-20", "100"):
             with self.subTest(value=value):
                 with self.assertRaises(TemperatureValidationError):
                     parse_temperature(value)

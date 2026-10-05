@@ -36,7 +36,7 @@
           </div>
           <button type="submit">Calcular velocidad</button>
         </div>
-        <p id="temperature-help" class="help">Valor permitido: de −10 °C a 60 °C. Se acepta punto o coma decimal.</p>
+        <p id="temperature-help" class="help">Valor permitido: de 10 °C a 40 °C. Se acepta punto o coma decimal.</p>
         <p id="temperature-error" class="error" role="alert" aria-live="polite"></p>
       </form>
 
@@ -111,7 +111,7 @@
       <p class="section-number">03 · MÉTODO</p>
       <h2 id="method-title">¿Cómo se obtiene el resultado?</h2>
       <div class="steps">
-        <div><b>1</b><h3>Validación</h3><p>Se comprueba que la entrada sea numérica y esté entre −10 °C y 60 °C.</p></div>
+        <div><b>1</b><h3>Validación</h3><p>Se comprueba que la entrada sea numérica y esté entre 10 °C y 40 °C.</p></div>
         <div><b>2</b><h3>Fuzzificación</h3><p>Se calculan las pertenencias a los conjuntos fría, templada y caliente.</p></div>
         <div><b>3</b><h3>Inferencia</h3><p>Cada pertenencia activa una regla asociada con 33 %, 66 % o 100 %.</p></div>
         <div><b>4</b><h3>Defuzzificación</h3><p>El promedio ponderado produce la velocidad final recomendada.</p></div>

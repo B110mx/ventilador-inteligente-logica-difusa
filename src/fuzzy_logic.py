@@ -116,8 +116,8 @@ def pedir_temperatura():
         entrada = input("Ingrese la temperatura del salon (°C): ").strip()
         try:
             temperatura = float(entrada.replace(",", "."))
-            if temperatura < -10:
-                print("Error: la temperatura no puede ser menor a -10 °C.")
+            if temperatura < 10 or temperatura > 40:
+                print("Error: la temperatura debe estar entre 10 y 40 °C.")
                 continue
             return temperatura
         except ValueError:

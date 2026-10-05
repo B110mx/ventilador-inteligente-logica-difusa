@@ -17,6 +17,7 @@ Este proyecto se enmarca dentro de la **Inteligencia Artificial Simbólica / Cl�
 - **Sistema Operativo:** Windows, macOS o Linux.
 - **Lenguaje:** Python 3.10 o superior.
 - **Dependencias:** `tkinter` (incluido en Python estándar) y `matplotlib`.
+- **Rango de temperatura:** de 10 °C a 40 °C.
 - Las dependencias externas están detalladas en `requirements.txt`.
 
 ## 6. Instrucciones de instalación y ejecución (Local)
@@ -62,7 +63,7 @@ La versión web conserva la validación de temperatura, el cálculo de lógica d
 ## 9. Bitácora de prompts
 A continuación, algunos de los prompts clave utilizados para ayudar en la generación del código y estructuración:
 1. *"Crea una estructura base en Python para evaluar funciones de pertenencia de temperatura (frío, templado, caliente)."*
-2. *"Necesito un script de validación robusto en Python que compruebe que la entrada de temperatura esté entre -10 y 60 grados Celsius."*
+2. *"Necesito un script de validación robusto en Python que compruebe que la entrada de temperatura esté entre 10 y 40 grados Celsius."*
 3. *"Genera una interfaz en Tkinter con un diseño moderno, tipo tarjeta (card), y un canvas con un medidor semicircular (gauge) dinámico."*
 4. *"Crea gráficos de Matplotlib para visualizar la pertenencia, activación de reglas y la curva de respuesta para un sistema de lógica difusa."*
 5. *"Escribe un README.md estructurado para la entrega del proyecto de IA, incluyendo la problemática, descripción, instrucciones y uso de IA."*

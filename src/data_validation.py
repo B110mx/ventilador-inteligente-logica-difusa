@@ -8,8 +8,8 @@ import math
 from numbers import Real
 
 
-MIN_TEMPERATURE_C = -10.0
-MAX_TEMPERATURE_C = 60.0
+MIN_TEMPERATURE_C = 10.0
+MAX_TEMPERATURE_C = 40.0
 
 
 class TemperatureValidationError(ValueError):
@@ -30,7 +30,7 @@ def parse_temperature(value):
 
     Raises:
         TemperatureValidationError: Si la entrada está vacía, no es numérica,
-            no es finita o está fuera del intervalo de -10 a 60 °C.
+            no es finita o está fuera del intervalo de 10 a 40 °C.
     """
     if isinstance(value, bool):
         raise TemperatureValidationError("La temperatura debe ser un número.")

@@ -18,7 +18,7 @@ class ValidationAndFuzzyLogicTests(unittest.TestCase):
     """Comprueba el flujo que usa la interfaz para calcular una velocidad."""
 
     def test_valid_text_reaches_fuzzy_calculation(self):
-        cases = [("-5", 33.0), ("22,5", 55.0), ("25", 66.0), ("30", 100.0)]
+        cases = [("10", 33.0), ("22,5", 55.0), ("25", 66.0), ("30", 100.0)]
         for raw_value, expected_speed in cases:
             with self.subTest(raw_value=raw_value):
                 temperature = parse_temperature(raw_value)
@@ -30,7 +30,7 @@ class ValidationAndFuzzyLogicTests(unittest.TestCase):
             parse_temperature("temperatura alta")
 
     def test_speed_stays_within_percentage_limits(self):
-        for temperature in range(-10, 61):
+        for temperature in range(10, 41):
             with self.subTest(temperature=temperature):
                 speed = calcular_velocidad(parse_temperature(temperature))[0]
                 self.assertGreaterEqual(speed, 0.0)

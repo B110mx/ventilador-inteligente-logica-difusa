@@ -1,7 +1,7 @@
 "use strict";
 
-const MIN_TEMPERATURE = -10;
-const MAX_TEMPERATURE = 60;
+const MIN_TEMPERATURE = 10;
+const MAX_TEMPERATURE = 40;
 const COLORS = { cold: "#2e86de", mild: "#10ac84", hot: "#ee5253", speed: "#7d3c98" };
 
 function coldMembership(t) {
