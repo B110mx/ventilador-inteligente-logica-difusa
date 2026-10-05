@@ -4,7 +4,7 @@
 -5    : Debe dar "Velocidad recomendada: 33.00%" (Fría)
 15    : Debe dar "Velocidad recomendada: 33.00%" (Fría)
 20    : Debe dar "Velocidad recomendada: 33.00%" (Fría)
-22.5  : Debe dar "Velocidad recomendada: 49.50%" (Transición Frío a Templado)
+22.5  : Debe dar "Velocidad recomendada: 55.00%" (Transición Frío a Templado)
 25    : Debe dar "Velocidad recomendada: 66.00%" (Templado / Transición inicial)
 26.5  : Transición Templado a Caliente, mezcla de reglas.
 30    : Debe dar "Velocidad recomendada: 100.00%" (Caliente)

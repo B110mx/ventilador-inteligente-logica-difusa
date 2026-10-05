@@ -15,7 +15,7 @@ Este proyecto se enmarca dentro de la **Inteligencia Artificial Simbólica / Cl�
 
 ## 5. Requisitos
 - **Sistema Operativo:** Windows, macOS o Linux.
-- **Lenguaje:** Python 3.8 o superior.
+- **Lenguaje:** Python 3.10 o superior.
 - **Dependencias:** `tkinter` (incluido en Python estándar) y `matplotlib`.
 - Las dependencias externas están detalladas en `requirements.txt`.
 

@@ -2,7 +2,7 @@
 import tkinter as tk
 from tkinter import messagebox, Toplevel
 
-# Importamos la lÃ³gica de cada compaÃ±ero
+# Importamos la lógica de cada compañero
 from fuzzy_logic import calcular_velocidad
 from data_validation import parse_temperature, TemperatureValidationError
 import visualization
@@ -10,7 +10,7 @@ import visualization
 class VentiladorApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("Ventilador Inteligente - LÃ³gica Difusa")
+        self.root.title("Ventilador Inteligente - Lógica Difusa")
         self.root.geometry("420x600")
         self.root.config(bg="#e8edf2")
         self.root.resizable(False, False)
@@ -19,7 +19,7 @@ class VentiladorApp:
         self.card = tk.Frame(root, bg="#ffffff", bd=0, highlightthickness=0)
         self.card.place(x=20, y=20, width=380, height=560)
 
-        # TÃ­tulo principal moderno
+        # Título principal moderno
         self.titulo_label = tk.Label(
             self.card, 
             text="Control Inteligente de Ventilador", 
@@ -35,7 +35,7 @@ class VentiladorApp:
 
         self.label_temp = tk.Label(
             self.frame_input, 
-            text="Ingrese la temperatura (Â°C):", 
+            text="Ingrese la temperatura (°C):",
             font=("Segoe UI", 11),
             bg="#ffffff",
             fg="#475569"
@@ -54,7 +54,7 @@ class VentiladorApp:
         )
         self.entry_temp.pack(side=tk.LEFT, padx=5, ipady=3)
 
-        # BotÃ³n moderno con estilo plano
+        # Botón moderno con estilo plano
         self.btn_calcular = tk.Button(
             self.card, 
             text="Calcular Velocidad", 
@@ -92,10 +92,10 @@ class VentiladorApp:
         self.canvas_gauge.pack(pady=10)
         self.dibujar_gauge(0.0)
 
-        # BotÃ³n para ver grÃ¡ficas
+        # Botón para ver gráficas
         self.btn_graficas = tk.Button(
             self.card, 
-            text="Ver GrÃ¡ficas de LÃ³gica Difusa", 
+            text="Ver Gráficas de Lógica Difusa",
             font=("Segoe UI", 10),
             bg="#10b981", 
             fg="white",
@@ -108,12 +108,12 @@ class VentiladorApp:
             command=self.mostrar_graficas
         )
         self.btn_graficas.pack(pady=20)
-        self.btn_graficas["state"] = "disabled" # Se habilita tras un cÃ¡lculo vÃ¡lido
+        self.btn_graficas["state"] = "disabled" # Se habilita tras un cálculo válido
         
         self.ultima_temperatura = None
 
     def dibujar_gauge(self, porcentaje):
-        """Dibuja un medidor semicircular moderno que cambia de color segÃºn el valor."""
+        """Dibuja un medidor semicircular moderno que cambia de color según el valor."""
         self.canvas_gauge.delete("all")
         
         self.canvas_gauge.create_arc(
@@ -148,14 +148,14 @@ class VentiladorApp:
         temperatura_str = self.entry_temp.get().strip()
         
         try:
-            # ValidaciÃ³n utilizando la lÃ³gica de Luis Bryan
+            # Validación utilizando la lógica de Luis Bryan
             temperatura = parse_temperature(temperatura_str)
             
-            # LÃ³gica difusa de Abril Miranda
+            # Lógica difusa de Abril Miranda
             resultado_tuple = calcular_velocidad(temperatura)
             resultado_velocidad = resultado_tuple[0]
             
-            # Interfaz de Mariana CÃ³rdova
+            # Interfaz de Mariana Córdova
             self.label_resultado.config(
                 text=f"Velocidad recomendada: {resultado_velocidad:.2f}%"
             )
@@ -165,17 +165,17 @@ class VentiladorApp:
             self.btn_graficas["state"] = "normal"
             
         except TemperatureValidationError as e:
-            messagebox.showerror("Error de ValidaciÃ³n", str(e))
+            messagebox.showerror("Error de Validación", str(e))
         except Exception as e:
-            messagebox.showerror("Error", f"OcurriÃ³ un error al calcular: {str(e)}")
+            messagebox.showerror("Error", f"Ocurrió un error al calcular: {str(e)}")
 
     def mostrar_graficas(self):
-        """Muestra las grÃ¡ficas generadas por la lÃ³gica de Francesco Romero."""
+        """Muestra las gráficas generadas por la lógica de Francesco Romero."""
         if self.ultima_temperatura is None:
             return
             
         ventana_graficas = Toplevel(self.root)
-        ventana_graficas.title("GrÃ¡ficas del Sistema Difuso")
+        ventana_graficas.title("Gráficas del Sistema Difuso")
         ventana_graficas.geometry("800x900")
         
         import matplotlib.pyplot as plt
