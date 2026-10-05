@@ -42,7 +42,15 @@ Este proyecto se enmarca dentro de la **Inteligencia Artificial Simbólica / Cl�
    python main.py
    ```
 
-## 7. Créditos y licencias
+## 7. Versión web
+
+El sistema también puede utilizarse directamente desde el navegador, sin instalar Python:
+
+**[Abrir Ventilador Inteligente Web](https://b110mx.github.io/ventilador-inteligente-logica-difusa/)**
+
+La versión web conserva la validación de temperatura, el cálculo de lógica difusa, el medidor de velocidad y las gráficas de pertenencia, activación y respuesta.
+
+## 8. Créditos y licencias
 - **Desarrollo:** Realizado por el equipo integrado por Abril Miranda, Mariana Córdova, Luis Bryan, Francesco Romero y Josué David.
 - **Librerías:** 
   - [Tkinter](https://docs.python.org/3/library/tkinter.html) (Licencia Python)
@@ -51,7 +59,7 @@ Este proyecto se enmarca dentro de la **Inteligencia Artificial Simbólica / Cl�
   - La estructura y refactorización de código base, además de la integración del archivo `main.py`, la optimización del archivo `interface.py` y la estructuración final del `README.md` contaron con la asistencia de Modelos de Lenguaje Grandes (LLMs).
   - Los scripts de evaluación y componentes iniciales de lógica matemática fueron creados y modificados manualmente por el equipo.
 
-## 8. Bitácora de prompts
+## 9. Bitácora de prompts
 A continuación, algunos de los prompts clave utilizados para ayudar en la generación del código y estructuración:
 1. *"Crea una estructura base en Python para evaluar funciones de pertenencia de temperatura (frío, templado, caliente)."*
 2. *"Necesito un script de validación robusto en Python que compruebe que la entrada de temperatura esté entre -10 y 60 grados Celsius."*

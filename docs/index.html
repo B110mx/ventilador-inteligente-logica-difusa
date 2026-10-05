@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Prototipo web para calcular la velocidad de un ventilador mediante lógica difusa.">
+  <title>Ventilador inteligente | Lógica difusa</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="eyebrow">PROYECTO DE INTELIGENCIA ARTIFICIAL</p>
+      <h1>Ventilador inteligente</h1>
+      <p class="subtitle">Control de velocidad mediante lógica difusa</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="panel control-panel" aria-labelledby="control-title">
+      <div class="panel-heading">
+        <div>
+          <p class="section-number">01 · ENTRADA</p>
+          <h2 id="control-title">Temperatura del ambiente</h2>
+        </div>
+        <span class="status"><span aria-hidden="true"></span>Sistema disponible</span>
+      </div>
+
+      <form id="temperature-form" novalidate>
+        <label for="temperature">Temperatura en grados Celsius</label>
+        <div class="input-row">
+          <div class="input-wrap">
+            <input id="temperature" name="temperature" inputmode="decimal" autocomplete="off"
+              placeholder="Ejemplo: 26.5" aria-describedby="temperature-help temperature-error">
+            <span>°C</span>
+          </div>
+          <button type="submit">Calcular velocidad</button>
+        </div>
+        <p id="temperature-help" class="help">Valor permitido: de −10 °C a 60 °C. Se acepta punto o coma decimal.</p>
+        <p id="temperature-error" class="error" role="alert" aria-live="polite"></p>
+      </form>
+
+      <div class="result-grid" aria-live="polite">
+        <div class="gauge-card">
+          <svg class="gauge" viewBox="0 0 220 130" role="img" aria-label="Velocidad recomendada">
+            <path class="gauge-track" d="M20 110 A90 90 0 0 1 200 110" pathLength="100"></path>
+            <path id="gauge-value" class="gauge-value" d="M20 110 A90 90 0 0 1 200 110" pathLength="100"></path>
+          </svg>
+          <div class="gauge-label">
+            <strong id="speed-value">--</strong>
+            <span>velocidad recomendada</span>
+          </div>
+          <p id="speed-level" class="speed-level">Ingresa una temperatura para comenzar</p>
+        </div>
+
+        <div class="memberships" aria-label="Grados de pertenencia">
+          <h3>Activación de reglas</h3>
+          <div class="membership-row">
+            <span><i class="dot cold"></i>Fría</span>
+            <strong id="cold-value">0.00</strong>
+          </div>
+          <div class="bar"><span id="cold-bar" class="cold-bg"></span></div>
+          <div class="membership-row">
+            <span><i class="dot mild"></i>Templada</span>
+            <strong id="mild-value">0.00</strong>
+          </div>
+          <div class="bar"><span id="mild-bar" class="mild-bg"></span></div>
+          <div class="membership-row">
+            <span><i class="dot hot"></i>Caliente</span>
+            <strong id="hot-value">0.00</strong>
+          </div>
+          <div class="bar"><span id="hot-bar" class="hot-bg"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="charts-section" class="charts-section" aria-labelledby="charts-title">
+      <div class="section-heading">
+        <p class="section-number">02 · VISUALIZACIÓN</p>
+        <h2 id="charts-title">Comportamiento del sistema difuso</h2>
+        <p>Las gráficas se actualizan con la temperatura evaluada.</p>
+      </div>
+
+      <div class="charts-grid">
+        <article class="panel chart-card chart-wide">
+          <h3>Funciones de pertenencia</h3>
+          <p>Grado en que la entrada pertenece a cada conjunto lingüístico.</p>
+          <div class="legend" aria-hidden="true">
+            <span><i class="dot cold"></i>Fría</span>
+            <span><i class="dot mild"></i>Templada</span>
+            <span><i class="dot hot"></i>Caliente</span>
+          </div>
+          <canvas id="membership-chart" height="290"></canvas>
+        </article>
+
+        <article class="panel chart-card">
+          <h3>Activación de reglas</h3>
+          <p>Intensidad aplicada a cada regla para la entrada actual.</p>
+          <canvas id="activation-chart" height="290"></canvas>
+        </article>
+
+        <article class="panel chart-card">
+          <h3>Respuesta del sistema</h3>
+          <p>Relación entre temperatura y velocidad calculada.</p>
+          <canvas id="response-chart" height="290"></canvas>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel method" aria-labelledby="method-title">
+      <p class="section-number">03 · MÉTODO</p>
+      <h2 id="method-title">¿Cómo se obtiene el resultado?</h2>
+      <div class="steps">
+        <div><b>1</b><h3>Validación</h3><p>Se comprueba que la entrada sea numérica y esté entre −10 °C y 60 °C.</p></div>
+        <div><b>2</b><h3>Fuzzificación</h3><p>Se calculan las pertenencias a los conjuntos fría, templada y caliente.</p></div>
+        <div><b>3</b><h3>Inferencia</h3><p>Cada pertenencia activa una regla asociada con 33 %, 66 % o 100 %.</p></div>
+        <div><b>4</b><h3>Defuzzificación</h3><p>El promedio ponderado produce la velocidad final recomendada.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Ventilador inteligente con lógica difusa · Versión web 1.0</p>
+    <a href="https://github.com/B110mx/ventilador-inteligente-logica-difusa">Código fuente en GitHub</a>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
