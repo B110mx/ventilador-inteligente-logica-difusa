@@ -5,7 +5,6 @@ from tkinter import messagebox, Toplevel
 # Importamos la lógica de cada compañero
 from fuzzy_logic import calcular_velocidad
 from data_validation import parse_temperature, TemperatureValidationError
-import visualization
 
 class VentiladorApp:
     def __init__(self, root):
@@ -173,6 +172,18 @@ class VentiladorApp:
         """Muestra las gráficas generadas por la lógica de Francesco Romero."""
         if self.ultima_temperatura is None:
             return
+
+        try:
+            import visualization
+        except ModuleNotFoundError as exc:
+            if exc.name == "matplotlib":
+                messagebox.showerror(
+                    "Dependencia faltante",
+                    "Para mostrar las gráficas instale las dependencias con:\n"
+                    "python -m pip install -r requirements.txt",
+                )
+                return
+            raise
             
         ventana_graficas = Toplevel(self.root)
         ventana_graficas.title("Gráficas del Sistema Difuso")
