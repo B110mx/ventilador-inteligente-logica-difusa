@@ -1,12 +1,12 @@
-"""Gráficas y visualización del prototipo de ventilador con lógica difusa.
+"""Gráficas de la recomendación de ventilación con lógica difusa.
 
-Usa las funciones de pertenencia y el cálculo de velocidad de fuzzy_logic.py,
+Usa las funciones de pertenencia y el cálculo de recomendación de fuzzy_logic.py,
 así que las gráficas siempre coinciden con lo que calcula el sistema.
 
 Funciones (todas devuelven un matplotlib.figure.Figure):
     grafica_pertenencia(temperatura=None)   Fría / Templado / Caliente
     grafica_activacion(temperatura)         grado de activación de cada regla
-    grafica_respuesta(temperatura=None)     curva temperatura -> velocidad
+    grafica_respuesta(temperatura=None)     curva temperatura -> recomendación
     embed_figure(fig, parent)               muestra una figura dentro de Tkinter
 
 Prueba independiente:  python src/visualization.py
@@ -82,7 +82,7 @@ def grafica_activacion(temperatura, fig=None):
     fig, ax = _nueva_figura(fig)
     velocidad, fria, templado, caliente = calcular_velocidad(temperatura)
 
-    nombres = ["Fría\n(→ 33%)", "Templado\n(→ 66%)", "Caliente\n(→ 100%)"]
+    nombres = ["Fría\n(→ 0%)", "Templado\n(→ 25%)", "Caliente\n(→ 100%)"]
     grados = [fria, templado, caliente]
     colores = [COLOR_FRIA, COLOR_TEMPLADO, COLOR_CALIENTE]
 
@@ -97,7 +97,7 @@ def grafica_activacion(temperatura, fig=None):
         )
 
     ax.set_title(
-        f"Activación de reglas a {temperatura:g} °C " f"→ velocidad {velocidad:.1f}%"
+        f"Activación de reglas a {temperatura:g} °C " f"→ ventilación {velocidad:.1f}%"
     )
     ax.set_ylabel("Grado de activación")
     ax.set_ylim(0, 1.15)
@@ -107,7 +107,7 @@ def grafica_activacion(temperatura, fig=None):
 
 
 def grafica_respuesta(temperatura=None, fig=None):
-    """Curva temperatura -> velocidad; si se da temperatura, marca el punto actual."""
+    """Curva temperatura -> recomendación; marca el punto actual si se proporciona."""
     fig, ax = _nueva_figura(fig)
     xs = _rango()
     ys = [calcular_velocidad(x)[0] for x in xs]
@@ -127,7 +127,7 @@ def grafica_respuesta(temperatura=None, fig=None):
 
     ax.set_title("Respuesta del sistema difuso")
     ax.set_xlabel("Temperatura (°C)")
-    ax.set_ylabel("Velocidad del ventilador (%)")
+    ax.set_ylabel("Ventilación recomendada (%)")
     ax.set_ylim(0, 105)
     ax.grid(alpha=0.3)
     fig.tight_layout()

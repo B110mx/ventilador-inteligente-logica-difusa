@@ -9,7 +9,7 @@ from data_validation import parse_temperature, TemperatureValidationError
 class VentiladorApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("Ventilador Inteligente - Lógica Difusa")
+        self.root.title("Recomendación de Ventilación - Lógica Difusa")
         self.root.geometry("420x600")
         self.root.config(bg="#e8edf2")
         self.root.resizable(False, False)
@@ -21,7 +21,7 @@ class VentiladorApp:
         # Título principal moderno
         self.titulo_label = tk.Label(
             self.card, 
-            text="Control Inteligente de Ventilador", 
+            text="Ventilación Recomendada para el Salón",
             font=("Segoe UI", 13, "bold"),
             bg="#ffffff",
             fg="#1e293b"
@@ -56,7 +56,7 @@ class VentiladorApp:
         # Botón moderno con estilo plano
         self.btn_calcular = tk.Button(
             self.card, 
-            text="Calcular Velocidad", 
+            text="Calcular Recomendación",
             font=("Segoe UI", 11, "bold"),
             bg="#3b82f6", 
             fg="white",
@@ -73,7 +73,7 @@ class VentiladorApp:
         # Resultado de texto
         self.label_resultado = tk.Label(
             self.card, 
-            text="Velocidad recomendada: --", 
+            text="Ventilación recomendada: --",
             font=("Segoe UI", 11, "bold"),
             bg="#ffffff",
             fg="#0284c7"
@@ -156,7 +156,7 @@ class VentiladorApp:
             
             # Interfaz de Mariana Córdova
             self.label_resultado.config(
-                text=f"Velocidad recomendada: {resultado_velocidad:.2f}%"
+                text=f"Ventilación recomendada: {resultado_velocidad:.2f}%"
             )
             self.dibujar_gauge(resultado_velocidad)
             

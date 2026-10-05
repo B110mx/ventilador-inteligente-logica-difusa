@@ -5,21 +5,18 @@ const MAX_TEMPERATURE = 40;
 const COLORS = { cold: "#2e86de", mild: "#10ac84", hot: "#ee5253", speed: "#7d3c98" };
 
 function coldMembership(t) {
-  if (t <= 18) return 1;
-  if (t >= 24) return 0;
-  return (24 - t) / 6;
+  return t < 20 ? 1 : 0;
 }
 
 function mildMembership(t) {
-  if (t <= 21 || t >= 28) return 0;
-  if (t <= 24) return (t - 21) / 3;
-  return (28 - t) / 4;
+  if (t < 20 || t >= 40) return 0;
+  return (40 - t) / 20;
 }
 
 function hotMembership(t) {
-  if (t <= 25) return 0;
-  if (t >= 35) return 1;
-  return (t - 25) / 10;
+  if (t <= 20) return 0;
+  if (t >= 40) return 1;
+  return (t - 20) / 20;
 }
 
 function calculateSpeed(t) {
@@ -27,7 +24,7 @@ function calculateSpeed(t) {
   const mild = mildMembership(t);
   const hot = hotMembership(t);
   const total = cold + mild + hot;
-  const speed = total === 0 ? 0 : (cold * 33 + mild * 66 + hot * 100) / total;
+  const speed = total === 0 ? 0 : (cold * 0 + mild * 25 + hot * 100) / total;
   return { speed, cold, mild, hot };
 }
 
@@ -64,9 +61,10 @@ const elements = {
 let selectedTemperature = null;
 
 function speedLevel(speed) {
-  if (speed < 40) return "Velocidad baja";
-  if (speed < 75) return "Velocidad media";
-  return "Velocidad alta";
+  if (speed === 0) return "Ventilador apagado";
+  if (speed < 50) return "Ventilación baja";
+  if (speed < 80) return "Ventilación media";
+  return "Ventilación alta";
 }
 
 function speedColor(speed) {
@@ -79,7 +77,7 @@ function updateResult(temperature) {
   const result = calculateSpeed(temperature);
   selectedTemperature = temperature;
   elements.speed.textContent = `${result.speed.toFixed(2)}%`;
-  elements.level.textContent = `${speedLevel(result.speed)} para ${temperature.toFixed(1)} °C`;
+  elements.level.textContent = `${speedLevel(result.speed)} para un salón a ${temperature.toFixed(1)} °C`;
   elements.gauge.style.strokeDasharray = `${result.speed} 100`;
   elements.gauge.style.stroke = speedColor(result.speed);
 
@@ -197,7 +195,7 @@ function drawActivationChart() {
 }
 
 function drawResponseChart() {
-  const plot = basePlot("response-chart", 10, 40, 0, 100, "Temperatura (°C)", "Velocidad (%)");
+  const plot = basePlot("response-chart", 10, 40, 0, 100, "Temperatura (°C)", "Ventilación (%)");
   const temperatures = valuesBetween(10, 40, .25);
   drawLine(plot, temperatures.map((t) => [t, calculateSpeed(t).speed]), COLORS.speed, 2.7);
   if (selectedTemperature !== null && selectedTemperature >= 10 && selectedTemperature <= 40) {

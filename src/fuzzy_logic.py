@@ -1,9 +1,9 @@
-"""Sistema difuso para controlar la velocidad de un ventilador.
+"""Sistema difuso para recomendar la velocidad de ventilación de un salón.
 
 Este programa recibe la temperatura ambiente y la evalua con tres
 reglas difusas principales:
-- temperatura baja: velocidad baja
-- temperatura templada: velocidad media
+- temperatura fría: ventilador apagado
+- temperatura templada: ventilación inicial
 - temperatura caliente: velocidad rapida
 
 La idea es usar grados de pertenencia para representar que tan fuerte
@@ -13,43 +13,36 @@ valores para obtener una velocidad recomendada.
 
 
 def pertenencia_fria(temperatura):
-    """Devuelve el grado de pertenencia de la temperatura a la zona fria/baja.
+    """Devuelve el grado de pertenencia a la regla de temperatura fría.
 
-    Entre 18°C y 24°C la pertenencia disminuye de 1.0 a 0.0.
+    La regla permanece activa por debajo de 20 °C y recomienda apagar
+    el ventilador. Al llegar a 20 °C comienza la ventilación inicial.
     """
-    if temperatura <= 18:
-        return 1.0
-    elif temperatura >= 24:
-        return 0.0
-    return (24 - temperatura) / 6
+    return 1.0 if temperatura < 20 else 0.0
 
 
 def pertenencia_templado(temperatura):
-    """Determina que tan templada es la temperatura.
+    """Determina la activación de la regla de ventilación inicial.
 
-    Si la temperatura está entre 21°C y 28°C, se calcula una
-    pertenencia intermedia que crece y luego decrece.
+    La pertenencia vale 1.0 a 20 °C y desciende gradualmente hasta
+    llegar a 0.0 a 40 °C.
     """
-    if temperatura <= 21:
+    if temperatura < 20 or temperatura >= 40:
         return 0.0
-    elif temperatura >= 28:
-        return 0.0
-    if temperatura <= 24:
-        return (temperatura - 21) / 3
-    return (28 - temperatura) / 4
+    return (40 - temperatura) / 20
 
 
 def pertenencia_caliente(temperatura):
-    """Calcula el grado de pertenencia a la zona de temperatura caliente.
+    """Calcula la activación de la regla de ventilación máxima.
 
-    A partir de 25°C la temperatura empieza a aumentar su pertenencia,
-    llegando a 1.0 cuando se acerca a 35°C o más.
+    Comienza en 0.0 a 20 °C y aumenta de forma lineal hasta 1.0
+    a 40 °C.
     """
-    if temperatura <= 25:
+    if temperatura <= 20:
         return 0.0
-    elif temperatura >= 35:
+    if temperatura >= 40:
         return 1.0
-    return (temperatura - 25) / 10
+    return (temperatura - 20) / 20
 
 
 def calcular_velocidad(temperatura):
@@ -69,9 +62,8 @@ def calcular_velocidad(temperatura):
     if suma == 0:
         return 0.0, fria, templado, caliente
 
-    velocidad = (
-        fria * 33 + templado * 66 + caliente * 100
-    ) / suma
+    # Consecuentes de las reglas: apagado, ventilación inicial y máxima.
+    velocidad = (fria * 0 + templado * 25 + caliente * 100) / suma
 
     return velocidad, fria, templado, caliente
 
@@ -84,20 +76,22 @@ def nivel_temperatura(temperatura):
         "Templado" para valores medios,
         "Caliente" para valores altos.
     """
-    if temperatura < 21:
+    if temperatura < 20:
         return "Fria"
-    elif temperatura <= 28:
+    elif temperatura <= 30:
         return "Templado"
     return "Caliente"
 
 
 def nivel_velocidad(temperatura):
     """Asigna la velocidad recomendada segun el rango de temperatura."""
-    if temperatura < 21:
+    if temperatura < 20:
+        return "Apagada"
+    elif temperatura < 30:
         return "Baja"
-    elif temperatura <= 28:
+    elif temperatura < 35:
         return "Media"
-    return "Rapida"
+    return "Alta"
 
 
 def mostrar_resultado(temperatura):
@@ -107,7 +101,7 @@ def mostrar_resultado(temperatura):
     velocidad_nivel = nivel_velocidad(temperatura)
     print("\n--- Resultado ---")
     print(f"Temperatura ingresada: {temperatura:.1f} °C ({temperatura_nivel})")
-    print(f"Velocidad recomendada del ventilador: {velocidad:.1f}% ({velocidad_nivel})")
+    print(f"Ventilación recomendada para el salón: {velocidad:.1f}% ({velocidad_nivel})")
 
 
 def pedir_temperatura():

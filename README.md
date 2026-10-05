@@ -4,14 +4,14 @@
 En muchos espacios cerrados (como salones de clases, oficinas o habitaciones), los ventiladores convencionales requieren un ajuste manual constante. Esto genera incomodidad térmica: cuando la temperatura baja, el ventilador puede seguir en alta velocidad, causando frío excesivo, y cuando hace calor, puede tardar en ajustarse, causando incomodidad. Esto no solo afecta el confort de los usuarios, sino que también ocasiona un consumo de energía ineficiente.
 
 ## 2. Descripción del proyecto
-El "Ventilador Inteligente" es un prototipo de software desarrollado en Python que automatiza la regulación de la velocidad de un ventilador en función de la temperatura ambiente utilizando **lógica difusa**. Cuenta con una interfaz gráfica amigable donde el usuario ingresa la temperatura, y el sistema calcula en tiempo real (mostrando gráficas del proceso) el porcentaje exacto de velocidad que debería tener el ventilador.
+El "Ventilador Inteligente" es un prototipo de software desarrollado en Python que recomienda la velocidad de ventilación para un salón en función de la temperatura ambiente utilizando **lógica difusa**. No controla hardware: el usuario ingresa la temperatura y el sistema calcula una recomendación teórica, mostrando un medidor y gráficas del proceso.
 
 ## 3. Rama de IA
 Este proyecto se enmarca dentro de la **Inteligencia Artificial Simbólica / Clásica**, específicamente en el campo de los **Sistemas Expertos** mediante el uso de **Lógica Difusa (Fuzzy Logic)**. A diferencia de la lógica booleana estricta (verdadero/falso), la lógica difusa permite manejar grados de verdad (por ejemplo, "qué tan frío o caliente" está el salón), imitando el razonamiento humano para tomar decisiones más precisas.
 
 ## 4. Caso de uso
 **Actor principal:** Usuario (ej. Profesor o alumno en un salón de clases).
-**Descripción:** El usuario interactúa con la interfaz gráfica ingresando la lectura actual del termómetro del salón (ej. 24.5 °C). El sistema recibe este dato, lo pasa por un proceso de *fuzzificación* (evaluando qué tan "Fría", "Templada" o "Caliente" es la temperatura), aplica las reglas de inferencia y finalmente *defuzzifica* el resultado para devolver una velocidad específica (ej. 60.5% de velocidad). El usuario también puede ver las gráficas de pertenencia y activación de reglas para comprender la decisión del sistema.
+**Descripción:** El usuario interactúa con la interfaz gráfica ingresando la lectura actual del termómetro del salón. El sistema evalúa qué tan fría, templada o caliente es la temperatura y recomienda una intensidad de ventilación. Por debajo de 20 °C recomienda apagar el ventilador; en 20 °C comienza en 25 % y aumenta gradualmente hasta 100 % en 40 °C. El usuario puede consultar las gráficas para comprender la recomendación.
 
 ## 5. Requisitos
 - **Sistema Operativo:** Windows, macOS o Linux.
@@ -50,6 +50,13 @@ El sistema también puede utilizarse directamente desde el navegador, sin instal
 **[Abrir Ventilador Inteligente Web](https://b110mx.github.io/ventilador-inteligente-logica-difusa/)**
 
 La versión web conserva la validación de temperatura, el cálculo de lógica difusa, el medidor de velocidad y las gráficas de pertenencia, activación y respuesta.
+
+### Reglas de recomendación
+
+- De 10 °C a menos de 20 °C: ventilador apagado, 0 %.
+- A 20 °C: ventilación inicial, 25 %.
+- De 20 °C a 40 °C: aumento gradual.
+- A 40 °C: ventilación máxima, 100 %.
 
 ## 8. Créditos y licencias
 - **Desarrollo:** Realizado por el equipo integrado por Abril Miranda, Mariana Córdova, Luis Bryan, Francesco Romero y Josué David.
