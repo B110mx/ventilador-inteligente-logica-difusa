@@ -37,6 +37,11 @@ h1 { margin: 0; font-size: clamp(2.1rem, 5vw, 3.7rem); line-height: 1.06; }
 .subtitle { margin: 10px 0 0; color: #dceaf3; font-size: 1.1rem; }
 
 .container { margin-top: -36px; padding-bottom: 60px; }
+.view-tabs { display: flex; gap: 8px; margin-bottom: 14px; padding: 6px; background: #e8edf1; border-radius: 10px; box-shadow: var(--shadow); }
+.view-tab { flex: 1; background: transparent; color: var(--navy); }
+.view-tab:hover { background: #dce5ea; }
+.view-tab.active { background: var(--navy); color: #fff; }
+.view-panel[hidden] { display: none; }
 .panel { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); }
 .control-panel, .method { padding: clamp(22px, 4vw, 38px); }
 .panel-heading { display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; }
@@ -103,6 +108,41 @@ canvas { display: block; width: 100%; max-width: 100%; }
 .steps b { display: inline-grid; place-items: center; width: 28px; height: 28px; margin-bottom: 10px; color: #fff; background: var(--navy); border-radius: 50%; }
 .steps p { margin: 5px 0 0; color: var(--muted); font-size: .88rem; }
 
+.simulator-panel { padding: clamp(22px, 4vw, 38px); overflow: hidden; }
+.simulator-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; margin-bottom: 24px; }
+.simulator-heading p:last-child { margin: 7px 0 0; color: var(--muted); }
+.classroom { position: relative; min-height: 430px; overflow: hidden; border: 8px solid #d5c5a8; border-bottom-width: 18px; border-radius: 8px; background: linear-gradient(#e9f5fb 0 72%, #d7b98e 72%); box-shadow: inset 0 -12px 0 rgba(96,64,38,.08); }
+.window { position: absolute; top: 45px; left: 45px; display: grid; grid-template-columns: 1fr 1fr; width: 180px; height: 135px; border: 8px solid #fff; background: #92d4ee; box-shadow: 0 3px 8px rgba(0,0,0,.12); }
+.window span { border: 1px solid rgba(255,255,255,.8); }
+.board { position: absolute; top: 55px; right: 55px; width: 280px; height: 105px; display: grid; place-items: center; border: 8px solid #a98254; background: #315a4c; color: #e8f1dc; font-weight: 700; text-align: center; }
+.fan-scene { position: absolute; left: 50%; top: 51%; width: 230px; height: 285px; transform: translate(-50%, -50%); }
+.fan-head { position: absolute; left: 50%; top: 6px; width: 190px; height: 190px; transform: translateX(-50%); border: 8px solid #526575; border-radius: 50%; background: rgba(255,255,255,.45); box-shadow: inset 0 0 0 8px rgba(82,101,117,.18); }
+.fan-blades { position: absolute; inset: 12px; animation: fan-spin 1s linear infinite; animation-play-state: paused; }
+.classroom.running .fan-blades { animation-play-state: running; }
+.fan-blades i { position: absolute; left: 50%; top: 50%; width: 67px; height: 35px; margin-top: -17px; transform-origin: 0 50%; border-radius: 8px 80% 80% 8px; background: #2e86de; opacity: .82; }
+.fan-blades i:nth-child(1) { transform: rotate(0deg); }
+.fan-blades i:nth-child(2) { transform: rotate(120deg); }
+.fan-blades i:nth-child(3) { transform: rotate(240deg); }
+.fan-blades b { position: absolute; left: 50%; top: 50%; width: 28px; height: 28px; transform: translate(-50%,-50%); border-radius: 50%; background: #34495e; }
+.fan-neck { position: absolute; left: calc(50% - 9px); top: 190px; width: 18px; height: 68px; background: #526575; }
+.fan-base { position: absolute; left: calc(50% - 58px); bottom: 3px; width: 116px; height: 28px; border-radius: 50% 50% 8px 8px; background: #526575; }
+.air { position: absolute; right: -16px; width: 55px; height: 4px; border-radius: 3px; background: #b5e8f5; opacity: 0; }
+.air-one { top: 70px; }.air-two { top: 103px; width: 78px; }.air-three { top: 136px; width: 48px; }
+.classroom.running .air { animation: airflow 1.2s ease-out infinite; }
+.classroom.running .air-two { animation-delay: .25s; }.classroom.running .air-three { animation-delay: .5s; }
+.desk { position: absolute; bottom: 34px; width: 150px; height: 55px; border-top: 10px solid #9a6d42; background: linear-gradient(90deg, transparent 8%, #795333 8% 14%, transparent 14% 86%, #795333 86% 92%, transparent 92%); }
+.desk-one { left: 35px; }.desk-two { right: 35px; }.desk-three { left: calc(50% - 75px); }
+.simulator-readout { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 20px; }
+.simulator-readout article { padding: 17px; border: 1px solid var(--line); border-radius: 8px; background: #f7f9fa; }
+.simulator-readout span { display: block; color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; }
+.simulator-readout strong { display: block; margin-top: 5px; color: var(--navy); font-size: 1.25rem; }
+.decision-card { margin-top: 14px; padding: 20px; border-left: 5px solid var(--green); background: #edf8f4; border-radius: 7px; }
+.decision-card p { margin: 7px 0 14px; }
+.rule-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.rule-chips span { padding: 5px 9px; border: 1px solid #bbd9cf; border-radius: 20px; background: #fff; font-size: .8rem; }
+@keyframes fan-spin { to { transform: rotate(360deg); } }
+@keyframes airflow { from { transform: translateX(0); opacity: .8; } to { transform: translateX(115px); opacity: 0; } }
+
 footer { display: flex; justify-content: space-between; gap: 16px; padding: 24px max(24px, calc((100% - 1068px) / 2)); color: #dceaf3; background: var(--navy); font-size: .84rem; }
 footer p { margin: 0; }
 footer a { color: #b9e8db; }
@@ -110,6 +150,13 @@ footer a { color: #b9e8db; }
 @media (max-width: 720px) {
   .site-header { padding-top: 40px; }
   .panel-heading, .input-row, .automatic-controls, footer { flex-direction: column; }
+  .simulator-heading { flex-direction: column; }
+  .simulator-heading button { width: 100%; }
+  .classroom { min-height: 500px; }
+  .window { left: 18px; width: 135px; height: 100px; }
+  .board { right: 18px; width: 175px; font-size: .82rem; }
+  .desk-one { left: 8px; }.desk-two { right: 8px; }.desk-three { display: none; }
+  .simulator-readout { grid-template-columns: 1fr; }
   .automatic-controls { align-items: stretch; }
   .status { align-self: flex-start; }
   button { width: 100%; }

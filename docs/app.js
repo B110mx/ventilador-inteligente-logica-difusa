@@ -58,7 +58,27 @@ const elements = {
   },
   weatherButton: document.querySelector("#weather-button"),
   autoUpdate: document.querySelector("#auto-update"),
-  weatherStatus: document.querySelector("#weather-status")
+  weatherStatus: document.querySelector("#weather-status"),
+  tabs: {
+    control: document.querySelector("#control-tab"),
+    simulator: document.querySelector("#simulator-tab")
+  },
+  views: {
+    control: document.querySelector("#control-view"),
+    simulator: document.querySelector("#simulator-view")
+  },
+  simulatorWeatherButton: document.querySelector("#simulator-weather-button"),
+  classroom: document.querySelector("#classroom"),
+  fanBlades: document.querySelector("#fan-blades"),
+  simTemperature: document.querySelector("#sim-temperature"),
+  simSpeed: document.querySelector("#sim-speed"),
+  simState: document.querySelector("#sim-state"),
+  simExplanation: document.querySelector("#sim-explanation"),
+  simRules: {
+    cold: document.querySelector("#sim-cold"),
+    mild: document.querySelector("#sim-mild"),
+    hot: document.querySelector("#sim-hot")
+  }
 };
 
 let selectedTemperature = null;
@@ -91,7 +111,38 @@ function updateResult(temperature) {
   });
 
   drawAllCharts();
+  updateSimulator(temperature, result);
 }
+
+function updateSimulator(temperature, result) {
+  const state = speedLevel(result.speed);
+  elements.simTemperature.textContent = `${temperature.toFixed(1)} °C`;
+  elements.simSpeed.textContent = `${result.speed.toFixed(1)} %`;
+  elements.simState.textContent = state;
+  elements.simRules.cold.textContent = `Fría: ${(result.cold * 100).toFixed(0)} %`;
+  elements.simRules.mild.textContent = `Templada: ${(result.mild * 100).toFixed(0)} %`;
+  elements.simRules.hot.textContent = `Caliente: ${(result.hot * 100).toFixed(0)} %`;
+  elements.classroom.classList.toggle("running", result.speed > 0);
+  elements.fanBlades.style.animationDuration = result.speed > 0
+    ? `${Math.max(.18, 1.5 - result.speed * .012)}s`
+    : "0s";
+  elements.simExplanation.textContent = result.speed === 0
+    ? `A ${temperature.toFixed(1)} °C predomina la regla fría. El sistema mantiene el ventilador apagado.`
+    : `A ${temperature.toFixed(1)} °C se activan las reglas con distintos grados. Su promedio ponderado recomienda ${result.speed.toFixed(1)} % de ventilación.`;
+}
+
+function showView(name) {
+  Object.keys(elements.views).forEach((key) => {
+    const active = key === name;
+    elements.views[key].hidden = !active;
+    elements.tabs[key].classList.toggle("active", active);
+    elements.tabs[key].setAttribute("aria-selected", String(active));
+  });
+  if (name === "control") drawAllCharts();
+}
+
+elements.tabs.control.addEventListener("click", () => showView("control"));
+elements.tabs.simulator.addEventListener("click", () => showView("simulator"));
 
 elements.form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -151,6 +202,13 @@ async function updateFromWeather() {
 }
 
 elements.weatherButton.addEventListener("click", updateFromWeather);
+elements.simulatorWeatherButton.addEventListener("click", async () => {
+  elements.simulatorWeatherButton.disabled = true;
+  elements.simulatorWeatherButton.textContent = "Consultando clima...";
+  await updateFromWeather();
+  elements.simulatorWeatherButton.disabled = false;
+  elements.simulatorWeatherButton.textContent = "Actualizar clima y simular";
+});
 elements.autoUpdate.addEventListener("change", () => {
   window.clearInterval(automaticTimer);
   if (elements.autoUpdate.checked) {

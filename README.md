@@ -52,6 +52,8 @@ El sistema también puede utilizarse directamente desde el navegador, sin instal
 
 La versión web conserva la validación de temperatura, el cálculo de lógica difusa, el medidor de velocidad y las gráficas de pertenencia, activación y respuesta.
 
+La pestaña **Simulador práctico** representa un salón y anima un ventilador según el porcentaje calculado. La velocidad de las aspas, el flujo de aire, el estado y la explicación se actualizan con la misma salida del motor difuso; no existe un cálculo independiente para la animación.
+
 ### Modo automático con datos meteorológicos
 
 El botón **Usar temperatura actual** solicita la ubicación del navegador y consulta Open-Meteo. Si el permiso de ubicación no está disponible, utiliza Tehuacán, Puebla como ubicación predeterminada. La opción de actualización automática repite la consulta cada 10 minutos. La temperatura exterior se valida antes de enviarse a `fuzzy_logic.py`; si la API falla, el usuario puede continuar con la entrada manual. La API aporta el dato y la lógica difusa sigue tomando la decisión.
