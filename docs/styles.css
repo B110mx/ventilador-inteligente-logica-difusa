@@ -59,6 +59,13 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(46,134,222,.35);
 .help, .error { margin: 8px 0 0; font-size: .84rem; }
 .help { color: var(--muted); }
 .error { min-height: 1.3em; color: #b4232b; font-weight: 700; }
+.automatic-controls { display: flex; align-items: center; gap: 16px; margin-top: 14px; }
+.secondary-button { min-height: 42px; background: #0f766e; }
+.secondary-button:hover { background: #115e59; }
+.secondary-button:disabled { opacity: .65; cursor: wait; }
+.auto-check { display: flex; align-items: center; gap: 7px; margin: 0; color: var(--muted); font-size: .86rem; font-weight: 400; }
+.auto-check input { width: 17px; height: 17px; padding: 0; }
+.weather-status { margin: 9px 0 0; color: var(--muted); font-size: .82rem; }
 
 .result-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 36px; padding-top: 30px; }
 .gauge-card { position: relative; min-height: 220px; text-align: center; }
@@ -102,7 +109,8 @@ footer a { color: #b9e8db; }
 
 @media (max-width: 720px) {
   .site-header { padding-top: 40px; }
-  .panel-heading, .input-row, footer { flex-direction: column; }
+  .panel-heading, .input-row, .automatic-controls, footer { flex-direction: column; }
+  .automatic-controls { align-items: stretch; }
   .status { align-self: flex-start; }
   button { width: 100%; }
   .result-grid, .charts-grid { grid-template-columns: 1fr; }

@@ -55,10 +55,14 @@ const elements = {
     cold: document.querySelector("#cold-bar"),
     mild: document.querySelector("#mild-bar"),
     hot: document.querySelector("#hot-bar")
-  }
+  },
+  weatherButton: document.querySelector("#weather-button"),
+  autoUpdate: document.querySelector("#auto-update"),
+  weatherStatus: document.querySelector("#weather-status")
 };
 
 let selectedTemperature = null;
+let automaticTimer = null;
 
 function speedLevel(speed) {
   if (speed === 0) return "Ventilador apagado";
@@ -99,6 +103,61 @@ elements.form.addEventListener("submit", (event) => {
     elements.error.textContent = error.message;
     elements.input.setAttribute("aria-invalid", "true");
     elements.input.focus();
+  }
+});
+
+function getCoordinates() {
+  return new Promise((resolve) => {
+    if (!navigator.geolocation) {
+      resolve({ latitude: 18.4615, longitude: -97.3928, location: "Tehuacán, Puebla" });
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => resolve({ latitude: coords.latitude, longitude: coords.longitude, location: "ubicación actual" }),
+      () => resolve({ latitude: 18.4615, longitude: -97.3928, location: "Tehuacán, Puebla" }),
+      { enableHighAccuracy: false, timeout: 6000, maximumAge: 600000 }
+    );
+  });
+}
+
+async function updateFromWeather() {
+  elements.weatherButton.disabled = true;
+  elements.weatherButton.textContent = "Consultando Open-Meteo...";
+  elements.error.textContent = "";
+  try {
+    const place = await getCoordinates();
+    const params = new URLSearchParams({
+      latitude: place.latitude,
+      longitude: place.longitude,
+      current: "temperature_2m",
+      timezone: "auto"
+    });
+    const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`);
+    if (!response.ok) throw new Error("La API meteorológica no respondió correctamente.");
+    const data = await response.json();
+    const temperature = parseTemperature(data.current.temperature_2m);
+    elements.input.value = temperature.toFixed(1);
+    updateResult(temperature);
+    const observedAt = String(data.current.time || "").replace("T", " ");
+    elements.weatherStatus.textContent = `Open-Meteo · ${place.location} · ${observedAt}`;
+  } catch (error) {
+    elements.error.textContent = `${error.message} Puedes continuar en modo manual.`;
+    elements.autoUpdate.checked = false;
+    window.clearInterval(automaticTimer);
+  } finally {
+    elements.weatherButton.disabled = false;
+    elements.weatherButton.textContent = "Actualizar temperatura actual";
+  }
+}
+
+elements.weatherButton.addEventListener("click", updateFromWeather);
+elements.autoUpdate.addEventListener("change", () => {
+  window.clearInterval(automaticTimer);
+  if (elements.autoUpdate.checked) {
+    updateFromWeather();
+    automaticTimer = window.setInterval(updateFromWeather, 600000);
+  } else {
+    elements.weatherStatus.textContent = "Modo manual. La API utiliza la temperatura exterior.";
   }
 });
 

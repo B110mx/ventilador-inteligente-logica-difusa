@@ -1,22 +1,24 @@
 ﻿# -*- coding: utf-8 -*-
 import tkinter as tk
 from tkinter import messagebox, Toplevel
+from threading import Thread
 
 # Importamos la lógica de cada compañero
 from fuzzy_logic import calcular_velocidad
 from data_validation import parse_temperature, TemperatureValidationError
+from weather_api import WeatherAPIError, get_current_temperature
 
 class VentiladorApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Recomendación de Ventilación - Lógica Difusa")
-        self.root.geometry("420x600")
+        self.root.geometry("460x700")
         self.root.config(bg="#e8edf2")
         self.root.resizable(False, False)
 
         # Contenedor principal estilo tarjeta (Card)
         self.card = tk.Frame(root, bg="#ffffff", bd=0, highlightthickness=0)
-        self.card.place(x=20, y=20, width=380, height=560)
+        self.card.place(x=20, y=20, width=420, height=660)
 
         # Título principal moderno
         self.titulo_label = tk.Label(
@@ -69,6 +71,44 @@ class VentiladorApp:
             command=self.procesar_temperatura
         )
         self.btn_calcular.pack(pady=15)
+
+        self.btn_clima = tk.Button(
+            self.card,
+            text="Usar temperatura actual de Tehuacán",
+            font=("Segoe UI", 10, "bold"),
+            bg="#0f766e",
+            fg="white",
+            activebackground="#115e59",
+            activeforeground="white",
+            relief="flat",
+            cursor="hand2",
+            padx=12,
+            pady=7,
+            command=self.consultar_clima,
+        )
+        self.btn_clima.pack(pady=(0, 6))
+
+        self.actualizacion_automatica = tk.BooleanVar(value=False)
+        self.chk_automatico = tk.Checkbutton(
+            self.card,
+            text="Actualizar automáticamente cada 10 minutos",
+            variable=self.actualizacion_automatica,
+            command=self.cambiar_modo_automatico,
+            bg="#ffffff",
+            fg="#475569",
+            activebackground="#ffffff",
+            font=("Segoe UI", 9),
+        )
+        self.chk_automatico.pack()
+
+        self.label_fuente = tk.Label(
+            self.card,
+            text="Modo manual · La API usa temperatura exterior",
+            font=("Segoe UI", 8),
+            bg="#ffffff",
+            fg="#64748b",
+        )
+        self.label_fuente.pack(pady=(3, 8))
 
         # Resultado de texto
         self.label_resultado = tk.Label(
@@ -150,23 +190,61 @@ class VentiladorApp:
             # Validación utilizando la lógica de Luis Bryan
             temperatura = parse_temperature(temperatura_str)
             
-            # Lógica difusa de Abril Miranda
-            resultado_tuple = calcular_velocidad(temperatura)
-            resultado_velocidad = resultado_tuple[0]
-            
-            # Interfaz de Mariana Córdova
-            self.label_resultado.config(
-                text=f"Ventilación recomendada: {resultado_velocidad:.2f}%"
-            )
-            self.dibujar_gauge(resultado_velocidad)
-            
-            self.ultima_temperatura = temperatura
-            self.btn_graficas["state"] = "normal"
+            self.mostrar_recomendacion(temperatura)
+            self.label_fuente.config(text="Modo manual · Temperatura ingresada por el usuario")
             
         except TemperatureValidationError as e:
             messagebox.showerror("Error de Validación", str(e))
         except Exception as e:
             messagebox.showerror("Error", f"Ocurrió un error al calcular: {str(e)}")
+
+    def mostrar_recomendacion(self, temperatura):
+        """Valida una lectura y la entrega al motor de lógica difusa."""
+        temperatura = parse_temperature(temperatura)
+        resultado_velocidad = calcular_velocidad(temperatura)[0]
+        self.entry_temp.delete(0, tk.END)
+        self.entry_temp.insert(0, f"{temperatura:.1f}")
+        self.label_resultado.config(
+            text=f"Ventilación recomendada: {resultado_velocidad:.2f}%"
+        )
+        self.dibujar_gauge(resultado_velocidad)
+        self.ultima_temperatura = temperatura
+        self.btn_graficas["state"] = "normal"
+
+    def consultar_clima(self):
+        """Consulta Open-Meteo en segundo plano para no bloquear la interfaz."""
+        self.btn_clima.config(state="disabled", text="Consultando Open-Meteo...")
+        Thread(target=self._consultar_clima_worker, daemon=True).start()
+
+    def _consultar_clima_worker(self):
+        try:
+            lectura = get_current_temperature()
+            self.root.after(0, self._aplicar_lectura_api, lectura)
+        except (WeatherAPIError, TemperatureValidationError) as exc:
+            self.root.after(0, self._mostrar_error_api, str(exc))
+
+    def _aplicar_lectura_api(self, lectura):
+        try:
+            self.mostrar_recomendacion(lectura.temperature)
+            hora = lectura.observed_at.replace("T", " ")
+            self.label_fuente.config(
+                text=f"Open-Meteo · {lectura.location} · Lectura: {hora}"
+            )
+        except TemperatureValidationError as exc:
+            self._mostrar_error_api(str(exc))
+            return
+        self.btn_clima.config(state="normal", text="Actualizar temperatura de Tehuacán")
+        if self.actualizacion_automatica.get():
+            self.root.after(600_000, self.consultar_clima)
+
+    def _mostrar_error_api(self, mensaje):
+        self.btn_clima.config(state="normal", text="Reintentar consulta del clima")
+        self.actualizacion_automatica.set(False)
+        messagebox.showerror("Clima no disponible", mensaje)
+
+    def cambiar_modo_automatico(self):
+        if self.actualizacion_automatica.get():
+            self.consultar_clima()
 
     def mostrar_graficas(self):
         """Muestra las gráficas generadas por la lógica de Francesco Romero."""

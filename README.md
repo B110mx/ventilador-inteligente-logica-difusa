@@ -4,7 +4,7 @@
 En muchos espacios cerrados (como salones de clases, oficinas o habitaciones), los ventiladores convencionales requieren un ajuste manual constante. Esto genera incomodidad térmica: cuando la temperatura baja, el ventilador puede seguir en alta velocidad, causando frío excesivo, y cuando hace calor, puede tardar en ajustarse, causando incomodidad. Esto no solo afecta el confort de los usuarios, sino que también ocasiona un consumo de energía ineficiente.
 
 ## 2. Descripción del proyecto
-El "Ventilador Inteligente" es un prototipo de software desarrollado en Python que recomienda la velocidad de ventilación para un salón en función de la temperatura ambiente utilizando **lógica difusa**. No controla hardware: el usuario ingresa la temperatura y el sistema calcula una recomendación teórica, mostrando un medidor y gráficas del proceso.
+El "Ventilador Inteligente" es un prototipo de software desarrollado en Python que recomienda la velocidad de ventilación para un salón en función de la temperatura ambiente utilizando **lógica difusa**. No controla hardware: el usuario puede ingresar la temperatura o consultar automáticamente la temperatura exterior mediante Open-Meteo. El sistema calcula una recomendación teórica y muestra un medidor y gráficas del proceso.
 
 ## 3. Rama de IA
 Este proyecto se enmarca dentro de la **Inteligencia Artificial Simbólica / Clásica**, específicamente en el campo de los **Sistemas Expertos** mediante el uso de **Lógica Difusa (Fuzzy Logic)**. A diferencia de la lógica booleana estricta (verdadero/falso), la lógica difusa permite manejar grados de verdad (por ejemplo, "qué tan frío o caliente" está el salón), imitando el razonamiento humano para tomar decisiones más precisas.
@@ -17,6 +17,7 @@ Este proyecto se enmarca dentro de la **Inteligencia Artificial Simbólica / Cl�
 - **Sistema Operativo:** Windows, macOS o Linux.
 - **Lenguaje:** Python 3.10 o superior.
 - **Dependencias:** `tkinter` (incluido en Python estándar) y `matplotlib`.
+- **Modo automático:** conexión a internet para consultar Open-Meteo; no requiere clave de API.
 - **Rango de temperatura:** de 10 °C a 40 °C.
 - Las dependencias externas están detalladas en `requirements.txt`.
 
@@ -50,6 +51,10 @@ El sistema también puede utilizarse directamente desde el navegador, sin instal
 **[Abrir Ventilador Inteligente Web](https://b110mx.github.io/ventilador-inteligente-logica-difusa/)**
 
 La versión web conserva la validación de temperatura, el cálculo de lógica difusa, el medidor de velocidad y las gráficas de pertenencia, activación y respuesta.
+
+### Modo automático con datos meteorológicos
+
+El botón **Usar temperatura actual** solicita la ubicación del navegador y consulta Open-Meteo. Si el permiso de ubicación no está disponible, utiliza Tehuacán, Puebla como ubicación predeterminada. La opción de actualización automática repite la consulta cada 10 minutos. La temperatura exterior se valida antes de enviarse a `fuzzy_logic.py`; si la API falla, el usuario puede continuar con la entrada manual. La API aporta el dato y la lógica difusa sigue tomando la decisión.
 
 ### Reglas de recomendación
 

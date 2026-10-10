@@ -38,6 +38,11 @@
         </div>
         <p id="temperature-help" class="help">Valor permitido: de 10 °C a 40 °C. Se acepta punto o coma decimal.</p>
         <p id="temperature-error" class="error" role="alert" aria-live="polite"></p>
+        <div class="automatic-controls">
+          <button id="weather-button" type="button" class="secondary-button">Usar temperatura actual</button>
+          <label class="auto-check"><input id="auto-update" type="checkbox"> Actualizar cada 10 minutos</label>
+        </div>
+        <p id="weather-status" class="weather-status" aria-live="polite">Modo manual. La API utiliza la temperatura exterior.</p>
       </form>
 
       <div class="result-grid" aria-live="polite">
@@ -120,7 +125,7 @@
   </main>
 
   <footer>
-    <p>Recomendación de ventilación con lógica difusa · Versión web 1.1</p>
+    <p>Recomendación de ventilación con lógica difusa · Versión web 1.2</p>
     <a href="https://github.com/B110mx/ventilador-inteligente-logica-difusa">Código fuente en GitHub</a>
   </footer>
 
