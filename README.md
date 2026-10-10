@@ -11,7 +11,7 @@ Este proyecto se enmarca dentro de la **Inteligencia Artificial Simbólica / Cl�
 
 ## 4. Caso de uso
 **Actor principal:** Usuario (ej. Profesor o alumno en un salón de clases).
-**Descripción:** El usuario interactúa con la interfaz gráfica ingresando la lectura actual del termómetro del salón. El sistema evalúa qué tan fría, templada o caliente es la temperatura y recomienda una intensidad de ventilación. Por debajo de 20 °C recomienda apagar el ventilador; en 20 °C comienza en 25 % y aumenta gradualmente hasta 100 % en 40 °C. El usuario puede consultar las gráficas para comprender la recomendación.
+**Descripción:** El usuario ingresa una temperatura y humedad o consulta el clima de una ciudad. El sistema evalúa qué tan fría, templada o caliente es la temperatura, aplica un ajuste difuso según la humedad y recomienda una intensidad de ventilación. El usuario puede consultar las gráficas, el historial y el simulador para comprender la decisión.
 
 ## 5. Requisitos
 - **Sistema Operativo:** Windows, macOS o Linux.
@@ -54,16 +54,19 @@ La versión web conserva la validación de temperatura, el cálculo de lógica d
 
 La pestaña **Simulador práctico** representa un salón y anima un ventilador según el porcentaje calculado. La velocidad de las aspas, el flujo de aire, el estado y la explicación se actualizan con la misma salida del motor difuso; no existe un cálculo independiente para la animación.
 
+La versión 1.4 incorpora humedad relativa como segunda entrada, funciones de pertenencia con transiciones graduales, búsqueda de ciudad mediante la API geográfica de Open-Meteo y un historial temporal de las últimas ocho decisiones. La humedad seca puede reducir ligeramente la recomendación y la humedad elevada puede aumentarla.
+
 ### Modo automático con datos meteorológicos
 
 El botón **Usar temperatura actual** solicita la ubicación del navegador y consulta Open-Meteo. Si el permiso de ubicación no está disponible, utiliza Tehuacán, Puebla como ubicación predeterminada. La opción de actualización automática repite la consulta cada 10 minutos. La temperatura exterior se valida antes de enviarse a `fuzzy_logic.py`; si la API falla, el usuario puede continuar con la entrada manual. La API aporta el dato y la lógica difusa sigue tomando la decisión.
 
 ### Reglas de recomendación
 
-- De 10 °C a menos de 20 °C: ventilador apagado, 0 %.
-- A 20 °C: ventilación inicial, 25 %.
-- De 20 °C a 40 °C: aumento gradual.
-- A 40 °C: ventilación máxima, 100 %.
+- Fría: pertenencia máxima hasta 18 °C y transición gradual hasta 24 °C.
+- Templada: función triangular entre 18 °C y 34 °C, con máximo a 26 °C.
+- Caliente: comienza a activarse a 28 °C y alcanza su máximo a 36 °C.
+- Humedad seca: puede reducir hasta 5 puntos la recomendación.
+- Humedad alta: puede aumentar hasta 10 puntos la recomendación.
 
 ## 8. Créditos y licencias
 - **Desarrollo:** Realizado por el equipo integrado por Abril Miranda, Mariana Córdova, Luis Bryan, Francesco Romero y Josué David.

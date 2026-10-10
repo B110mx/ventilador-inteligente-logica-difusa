@@ -15,41 +15,70 @@ valores para obtener una velocidad recomendada.
 def pertenencia_fria(temperatura):
     """Devuelve el grado de pertenencia a la regla de temperatura fría.
 
-    La regla permanece activa por debajo de 20 °C y recomienda apagar
-    el ventilador. Al llegar a 20 °C comienza la ventilación inicial.
+    Permanece totalmente activa hasta 18 °C y desciende de forma gradual
+    hasta desaparecer a 24 °C.
     """
-    return 1.0 if temperatura < 20 else 0.0
+    if temperatura <= 18:
+        return 1.0
+    if temperatura >= 24:
+        return 0.0
+    return (24 - temperatura) / 6
 
 
 def pertenencia_templado(temperatura):
     """Determina la activación de la regla de ventilación inicial.
 
-    La pertenencia vale 1.0 a 20 °C y desciende gradualmente hasta
-    llegar a 0.0 a 40 °C.
+    Aumenta entre 18 y 26 °C y disminuye entre 26 y 34 °C.
     """
-    if temperatura < 20 or temperatura >= 40:
+    if temperatura <= 18 or temperatura >= 34:
         return 0.0
-    return (40 - temperatura) / 20
+    if temperatura <= 26:
+        return (temperatura - 18) / 8
+    return (34 - temperatura) / 8
 
 
 def pertenencia_caliente(temperatura):
     """Calcula la activación de la regla de ventilación máxima.
 
-    Comienza en 0.0 a 20 °C y aumenta de forma lineal hasta 1.0
-    a 40 °C.
+    Comienza a activarse a 28 °C y alcanza su máximo a 36 °C.
     """
-    if temperatura <= 20:
+    if temperatura <= 28:
         return 0.0
-    if temperatura >= 40:
+    if temperatura >= 36:
         return 1.0
-    return (temperatura - 20) / 20
+    return (temperatura - 28) / 8
 
 
-def calcular_velocidad(temperatura):
+def pertenencia_seca(humedad):
+    if humedad <= 30:
+        return 1.0
+    if humedad >= 50:
+        return 0.0
+    return (50 - humedad) / 20
+
+
+def pertenencia_humedad_comoda(humedad):
+    if humedad <= 30 or humedad >= 70:
+        return 0.0
+    if humedad <= 50:
+        return (humedad - 30) / 20
+    return (70 - humedad) / 20
+
+
+def pertenencia_humeda(humedad):
+    if humedad <= 50:
+        return 0.0
+    if humedad >= 70:
+        return 1.0
+    return (humedad - 50) / 20
+
+
+def calcular_velocidad(temperatura, humedad=50.0):
     """Combina las reglas difusas para obtener un valor final de velocidad.
 
     Args:
-        temperatura (float): Valor de la temperatura ingresada en grados Celsius.
+        temperatura (float): Valor de la temperatura en grados Celsius.
+        humedad (float): Humedad relativa de 0 a 100 %. Su valor neutral es 50 %.
 
     Returns:
         tuple: (velocidad, fria, templado, caliente)
@@ -62,8 +91,19 @@ def calcular_velocidad(temperatura):
     if suma == 0:
         return 0.0, fria, templado, caliente
 
-    # Consecuentes de las reglas: apagado, ventilación inicial y máxima.
-    velocidad = (fria * 0 + templado * 25 + caliente * 100) / suma
+    # Reglas de temperatura con consecuentes tipo Sugeno: 0, 50 y 100 %.
+    velocidad_base = (fria * 0 + templado * 50 + caliente * 100) / suma
+
+    seca = pertenencia_seca(humedad)
+    comoda = pertenencia_humedad_comoda(humedad)
+    humeda = pertenencia_humeda(humedad)
+    suma_humedad = seca + comoda + humeda
+    ajuste = 0.0
+    if suma_humedad:
+        # El aire seco reduce levemente y el húmedo aumenta la recomendación.
+        ajuste = (seca * -5 + comoda * 0 + humeda * 10) / suma_humedad
+
+    velocidad = min(100.0, max(0.0, velocidad_base + ajuste))
 
     return velocidad, fria, templado, caliente
 

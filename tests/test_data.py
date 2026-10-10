@@ -17,6 +17,7 @@ from data_validation import (  # noqa: E402
     TemperatureValidationError,
     is_valid_temperature,
     parse_temperature,
+    parse_humidity,
 )
 
 
@@ -71,6 +72,19 @@ class IsValidTemperatureTests(unittest.TestCase):
         self.assertTrue(is_valid_temperature("28,5"))
         self.assertFalse(is_valid_temperature("sin dato"))
         self.assertFalse(is_valid_temperature(75))
+
+
+class ParseHumidityTests(unittest.TestCase):
+    def test_accepts_humidity_range(self):
+        self.assertEqual(parse_humidity("55,5"), 55.5)
+        self.assertEqual(parse_humidity(0), 0.0)
+        self.assertEqual(parse_humidity(100), 100.0)
+
+    def test_rejects_invalid_humidity(self):
+        for value in ("", "alta", -1, 101, math.inf):
+            with self.subTest(value=value):
+                with self.assertRaises(TemperatureValidationError):
+                    parse_humidity(value)
 
 
 if __name__ == "__main__":

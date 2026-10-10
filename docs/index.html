@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Prototipo web para recomendar la ventilación de un salón mediante lógica difusa.">
   <title>Ventilación recomendada | Lógica difusa</title>
-  <link rel="stylesheet" href="styles.css?v=1.3.0">
+  <link rel="stylesheet" href="styles.css?v=1.4.0">
 </head>
 <body>
   <header class="site-header">
@@ -33,12 +33,21 @@
       </div>
 
       <form id="temperature-form" novalidate>
-        <label for="temperature">Temperatura en grados Celsius</label>
+        <label for="city">Ciudad para el modo automático</label>
+        <div class="input-wrap city-wrap">
+          <input id="city" name="city" autocomplete="address-level2" placeholder="Ejemplo: Tehuacán">
+        </div>
+        <div class="dual-labels"><label for="temperature">Temperatura en grados Celsius</label><label for="humidity">Humedad relativa</label></div>
         <div class="input-row">
           <div class="input-wrap">
             <input id="temperature" name="temperature" inputmode="decimal" autocomplete="off"
               placeholder="Ejemplo: 26.5" aria-describedby="temperature-help temperature-error">
             <span>°C</span>
+          </div>
+          <div class="input-wrap">
+            <input id="humidity" name="humidity" inputmode="decimal" autocomplete="off" value="50"
+              placeholder="Ejemplo: 55" aria-label="Humedad relativa">
+            <span>%</span>
           </div>
           <button type="submit">Calcular recomendación</button>
         </div>
@@ -72,7 +81,7 @@
           </div>
           <div class="bar"><span id="cold-bar" class="cold-bg"></span></div>
           <div class="membership-row">
-            <span><i class="dot mild"></i>Templada → 25 %</span>
+            <span><i class="dot mild"></i>Templada → 50 %</span>
             <strong id="mild-value">0.00</strong>
           </div>
           <div class="bar"><span id="mild-bar" class="mild-bg"></span></div>
@@ -83,6 +92,11 @@
           <div class="bar"><span id="hot-bar" class="hot-bg"></span></div>
         </div>
       </div>
+    </section>
+
+    <section class="panel history-panel" aria-labelledby="history-title">
+      <div class="history-heading"><div><p class="section-number">04 · HISTORIAL</p><h2 id="history-title">Decisiones recientes</h2></div><button id="clear-history" type="button" class="text-button">Limpiar</button></div>
+      <div class="table-wrap"><table><thead><tr><th>Hora</th><th>Fuente</th><th>Temperatura</th><th>Humedad</th><th>Velocidad</th></tr></thead><tbody id="history-body"><tr class="empty-history"><td colspan="5">Todavía no hay cálculos registrados.</td></tr></tbody></table></div>
     </section>
 
     <section id="charts-section" class="charts-section" aria-labelledby="charts-title">
@@ -124,7 +138,7 @@
       <div class="steps">
         <div><b>1</b><h3>Validación</h3><p>Se comprueba que la entrada sea numérica y esté entre 10 °C y 40 °C.</p></div>
         <div><b>2</b><h3>Fuzzificación</h3><p>Se calculan las pertenencias a los conjuntos fría, templada y caliente.</p></div>
-        <div><b>3</b><h3>Inferencia</h3><p>Cada pertenencia activa una regla asociada con 0 %, 25 % o 100 %.</p></div>
+        <div><b>3</b><h3>Inferencia</h3><p>Las pertenencias de temperatura y humedad activan reglas que modifican la velocidad.</p></div>
         <div><b>4</b><h3>Defuzzificación</h3><p>El promedio ponderado produce el porcentaje final recomendado.</p></div>
       </div>
     </section>
@@ -159,6 +173,7 @@
 
         <div class="simulator-readout" aria-live="polite">
           <article><span>Temperatura</span><strong id="sim-temperature">-- °C</strong></article>
+          <article><span>Humedad</span><strong id="sim-humidity">-- %</strong></article>
           <article><span>Velocidad</span><strong id="sim-speed">0 %</strong></article>
           <article><span>Estado</span><strong id="sim-state">Esperando lectura</strong></article>
         </div>
@@ -177,10 +192,10 @@
   </main>
 
   <footer>
-    <p>Recomendación de ventilación con lógica difusa · Versión web 1.2</p>
+    <p>Recomendación de ventilación con lógica difusa · Versión web 1.4</p>
     <a href="https://github.com/B110mx/ventilador-inteligente-logica-difusa">Código fuente en GitHub</a>
   </footer>
 
-  <script src="app.js?v=1.3.0"></script>
+  <script src="app.js?v=1.4.0"></script>
 </body>
 </html>

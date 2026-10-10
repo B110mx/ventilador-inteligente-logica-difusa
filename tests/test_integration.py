@@ -20,11 +20,11 @@ class ValidationAndFuzzyLogicTests(unittest.TestCase):
     def test_valid_text_reaches_fuzzy_calculation(self):
         cases = [
             ("10", 0.0),
-            ("19,9", 0.0),
-            ("20", 25.0),
-            ("25", 43.75),
-            ("30", 62.5),
-            ("35", 81.25),
+            ("19,9", 12.8959276018),
+            ("20", 13.6363636364),
+            ("25", 50.0),
+            ("30", 66.6666666667),
+            ("35", 100.0),
             ("40", 100.0),
         ]
         for raw_value, expected_speed in cases:
@@ -43,6 +43,9 @@ class ValidationAndFuzzyLogicTests(unittest.TestCase):
                 speed = calcular_velocidad(parse_temperature(temperature))[0]
                 self.assertGreaterEqual(speed, 0.0)
                 self.assertLessEqual(speed, 100.0)
+
+    def test_high_humidity_increases_recommendation(self):
+        self.assertGreater(calcular_velocidad(30, 80)[0], calcular_velocidad(30, 50)[0])
 
 
 class VisualizationTests(unittest.TestCase):

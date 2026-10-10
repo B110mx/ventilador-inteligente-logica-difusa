@@ -82,7 +82,7 @@ def grafica_activacion(temperatura, fig=None):
     fig, ax = _nueva_figura(fig)
     velocidad, fria, templado, caliente = calcular_velocidad(temperatura)
 
-    nombres = ["Fría\n(→ 0%)", "Templado\n(→ 25%)", "Caliente\n(→ 100%)"]
+    nombres = ["Fría\n(→ 0%)", "Templado\n(→ 50%)", "Caliente\n(→ 100%)"]
     grados = [fria, templado, caliente]
     colores = [COLOR_FRIA, COLOR_TEMPLADO, COLOR_CALIENTE]
 

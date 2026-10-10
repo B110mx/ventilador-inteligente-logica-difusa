@@ -10,6 +10,8 @@ from numbers import Real
 
 MIN_TEMPERATURE_C = 10.0
 MAX_TEMPERATURE_C = 40.0
+MIN_HUMIDITY_PERCENT = 0.0
+MAX_HUMIDITY_PERCENT = 100.0
 
 
 class TemperatureValidationError(ValueError):
@@ -69,4 +71,17 @@ def is_valid_temperature(value):
     except TemperatureValidationError:
         return False
     return True
+
+
+def parse_humidity(value):
+    """Convierte y valida un porcentaje de humedad entre 0 y 100."""
+    if isinstance(value, bool):
+        raise TemperatureValidationError("La humedad debe ser un número.")
+    try:
+        humidity = float(str(value).strip().replace(",", "."))
+    except (TypeError, ValueError) as exc:
+        raise TemperatureValidationError("Ingrese una humedad numérica válida.") from exc
+    if not math.isfinite(humidity) or not 0 <= humidity <= 100:
+        raise TemperatureValidationError("La humedad debe estar entre 0 y 100 %.")
+    return humidity
 
